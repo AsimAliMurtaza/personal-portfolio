@@ -67,32 +67,32 @@ export default function ContactMe() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      await emailjs.send(
-        "service_xiizqqq",
-        "template_vz3i66q",
-        formData,
-        "TRga4OXOfsikRc02H"
-      );
-      toast({
-        title: "Message Sent.",
-        description: "Your message has been sent successfully.",
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-      });
-      setFormData({ name: "", email: "", subject: "", message: "" });
-    } catch (error) {
-      console.error("Error sending message:", error);
+    // try {
+    //   await emailjs.send(
+    //     "service_xiizqqq",
+    //     "template_vz3i66q",
+    //     formData,
+    //     "TRga4OXOfsikRc02H"
+    //   );
+    //   toast({
+    //     title: "Message Sent.",
+    //     description: "Your message has been sent successfully.",
+    //     status: "success",
+    //     duration: 5000,
+    //     isClosable: true,
+    //   });
+    //   setFormData({ name: "", email: "", subject: "", message: "" });
+    // } catch (error) {
+    //   console.error("Error sending message:", error);
       toast({
         title: "Error.",
         description:
-          "There was an error sending your message. Please try again.",
+          "Sending messages have been disabled. Please try again later",
         status: "error",
         duration: 5000,
         isClosable: true,
       });
-    }
+    // }
   };
 
   return (

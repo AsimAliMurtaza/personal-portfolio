@@ -32,7 +32,7 @@ interface AboutMeData extends DocumentData {
 
 const onClickHandler = () => {
   window.open(
-    "https://www.overleaf.com/download/project/65b5d9a3e349d90293f8624d/build/190a1ba2cd2-4a538ffe5a43d11d/output/output.pdf?compileGroup=standard&clsiserverid=clsi-pre-emp-n2d-c-f-k9r9&enable_pdf_caching=true&popupDownload=true"
+    "https://drive.google.com/file/d/1hfAwa3--ywJgBOLiyqoXKMZRx_dwnJOW/view?usp=sharing"
   );
 };
 
