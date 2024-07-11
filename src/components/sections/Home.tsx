@@ -1,84 +1,131 @@
-import { Box, Container, Heading, Image, Text } from "@chakra-ui/react";
+"use client";
+import {
+  Box,
+  Container,
+  Heading,
+  Image,
+  Text,
+  Link as ChakraLink,
+  Icon,
+} from "@chakra-ui/react";
+import { FaFacebook, FaGithub, FaTwitter } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { fetchHomeData } from "@/lib/firebase";
+import { DocumentData } from "firebase/firestore";
+import { useEffect, useState } from "react";
+
+// Define interfaces for data
+interface HomeData extends DocumentData {
+  description: string;
+  image: string;
+}
 
 export default function Home() {
-  return (
-    <Container maxW="container.xl">
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Image
-          src="https://images.unsplash.com/photo-1719776049588-e1997c9066dd?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90b3MtZmVlZHw4N3x8fGVufDB8fHx8fA%3D%3D"
-          alt="profile-pic"
-          boxSize="250px"
-          marginTop={10}
-          border={"5px solid white"}
-          objectFit="cover"
-          borderRadius="full"
-        />
-      </Box>
+  const [homeData, setHomeData] = useState<HomeData | null>(null);
 
-      <Container
-        maxW="container.md"
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: 20,
-          color: "white",
-        }}
-      >
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const data = await fetchHomeData();
+        console.log("Fetched data:", data);
+        setHomeData(data as HomeData); // Asserting data type to HomeData
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    getData();
+  }, []);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -250 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        delay: 0.5,
+        duration: 1,
+        type: "keyframes",
+        stiffness: 260,
+      }}
+    >
+      <Container maxW="container.xl" id="home">
         <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            color: "white",
-          }}
+          backgroundSize="cover"
+          display="flex"
+          minHeight="50vh"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+          color="white"
         >
-          <Heading
-            as="h1"
-            size="2xl"
-            textAlign="center"
-            color={"white"}
-          >
-            Hi, I am
-          </Heading>
-          <Heading as="h2" size="3xl" textAlign="center" color={"#FFE800"}>
-            Muhammad Asim Ali Murtaza
-          </Heading>
+          <Box borderRadius="full" overflow="hidden">
+            <Image
+              src={homeData?.image}
+              alt="profile-pic"
+              boxSize={{ base: "150px", md: "200px" }}
+              objectFit="cover"
+            />
+          </Box>
+
+          <Container maxW="container.md" textAlign="center" mt={10}>
+            <Heading as="h1" size="xl">
+              Hi, I am
+            </Heading>
+            <Heading as="h2" size="2xl" color="green.100">
+              Muhammad Asim Ali Murtaza
+            </Heading>
+          </Container>
+
+          <Container maxW="container.md" textAlign="center" mt={10}>
+            <Text>{homeData?.description}</Text>
+            <Box
+              mt={5}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "20px",
+              }}
+            >
+              <ChakraLink
+                sx={{
+                  _hover: {
+                    color: "green.100",
+                  },
+                }}
+                href="https://twitter.com/heyits_asim" // Corrected Twitter link
+                target="_blank" // Open link in a new tab
+                rel="noopener noreferrer" // Security best practice for external links
+              >
+                <Icon as={FaTwitter} />
+              </ChakraLink>
+              <ChakraLink
+                sx={{
+                  _hover: {
+                    color: "green.100",
+                  },
+                }}
+                href="https://facebook.com/asim90209" // Corrected Facebook link
+                target="_blank" // Open link in a new tab
+                rel="noopener noreferrer" // Security best practice for external links
+              >
+                <Icon as={FaFacebook} />
+              </ChakraLink>
+              <ChakraLink
+                sx={{
+                  _hover: {
+                    color: "green.100",
+                  },
+                }}
+                href="https://github.com/AsimAliMurtaza"
+                target="_blank" // Open link in a new tab
+                rel="noopener noreferrer" // Security best practice for external links
+              >
+                <Icon as={FaGithub} />
+              </ChakraLink>
+            </Box>
+          </Container>
         </Box>
       </Container>
-      <Container
-        maxW="container.md"
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: 20,
-          color: "white",
-        }}
-      >
-        <Heading as="h3" size="lg" textAlign="center" mt={5} color={"white"}>
-          Full Stack Developer
-        </Heading>
-        <Text textAlign="center" mt={5} color={"white"}>
-          I am a Full Stack Developer with 2 years of experience in building web
-          applications. I specialize in JavaScript, TypeScript, React, Node.js,
-          and Express.js. I am passionate about learning new technologies and
-          building software solutions.
-        </Text>
-        <Text textAlign="center" mt={5} color={"white"}>
-          I am currently looking for new opportunities. If you are looking for a
-          Full Stack Developer, feel free to contact me.
-        </Text>
-      </Container>
-    </Container>
+    </motion.div>
   );
 }

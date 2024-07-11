@@ -7,6 +7,7 @@ import { Box } from "@chakra-ui/react";
 
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/Page-Header";
+import PageFooter from "@/components/ui/Page-Footer";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -14,8 +15,8 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "My personal portfolio",
+  title: "Asim's Portfolio",
+  description: "My Personal portfolio",
 };
 
 export default function RootLayout({
@@ -39,10 +40,9 @@ export default function RootLayout({
         >
           <Providers>
             <Navbar />
-            <Box pt="80px">
-            {children}
-            </Box>
-            </Providers>
+            <Box pt="80px">{children}</Box>
+            <PageFooter />
+          </Providers>
         </ThemeProvider>
       </body>
     </html>
