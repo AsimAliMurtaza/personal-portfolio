@@ -94,7 +94,7 @@ export default function Resume() {
       animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
       transition={{ duration: 0.7 }}
     >
-      <Container maxW="container.xl" mt={"100px"} id="resume">
+           <Container maxW="container.xl" mx="auto" id="resume" my={{ base: "100px", md: "80px" }}>
         <Heading
           as="h2"
           size="xl"

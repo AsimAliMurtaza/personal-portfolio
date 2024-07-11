@@ -34,7 +34,7 @@ interface Skill {
 
 export default function Skills() {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, {rootMargin: "-200px"});
+  const isInView = useInView(ref, { rootMargin: "-200px" });
 
   const [skills, setSkills] = useState<Skill[]>([]);
 
@@ -69,7 +69,12 @@ export default function Skills() {
       animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
       transition={{ duration: 0.7 }}
     >
-      <Container maxW="container.xl" mt={"30px"} color="white">
+      <Container
+        maxW="container.xl"
+        mx="auto"
+        id="home"
+        my={{ base: "100px", md: "80px" }}
+      >
         <Heading
           as="h2"
           color={"green.400"}

@@ -65,7 +65,7 @@ export default function Portfolio() {
       animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
       transition={{ duration: 0.7 }}
     >
-      <Container maxW="container.xl" mt="100px" id="portfolio">
+      <Container maxW="container.xl" mx="auto" id="portfolio" my={{ base: "100px", md: "80px" }}>
         <Heading
           as="h2"
           color="green.400"

@@ -57,12 +57,7 @@ const Services = () => {
       animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
       transition={{ duration: 0.7 }}
     >
-      <Container
-        maxW="container.xl"
-        mt={"150px"}
-        mb={"120px"}
-        textAlign="center"
-      >
+            <Container maxW="container.xl" mx="auto" my={{ base: "100px", md: "80px" }}>
         <Heading as="h2" color="green.400" mb={10} fontWeight="thin">
           SERVICES
         </Heading>
