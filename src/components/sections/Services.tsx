@@ -19,11 +19,9 @@ interface Service {
   description: string;
 }
 
-
-
 const Services = () => {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, {rootMargin: "-200px"});
+  const isInView = useInView(ref, { rootMargin: "-200px" });
   const [services, setServices] = useState<Service[]>([]);
 
   useEffect(() => {
@@ -57,7 +55,14 @@ const Services = () => {
       animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
       transition={{ duration: 0.7 }}
     >
-            <Container maxW="container.xl" mx="auto" my={{ base: "100px", md: "80px" }}>
+      <Container
+        maxW="container.xl"
+        mx="auto"
+        display="flex"
+        flexDirection="column"
+        alignItems="center"        
+        my={{ base: "100px", md: "80px" }}
+      >
         <Heading as="h2" color="green.400" mb={10} fontWeight="thin">
           SERVICES
         </Heading>

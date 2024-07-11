@@ -38,18 +38,17 @@ const Navbar: React.FC = () => {
         damping: 20,
       }}
     >
-      <Container maxW="container.xl" textAlign="center">
         <Box
           as="nav"
           position="fixed"
           top="0"
           width="100%"
-          bg="rgba(0.88, 0.76, 0.30, 0.4)" // Semi-transparent background
+          height="60px"
+          bg="rgba(0.3,0.2,0.39, 0.4)" // Semi-transparent background
           color="white"
-          p={4}
-          zIndex="1000"
+          
         >
-          <Flex align="center">
+          <Flex align="center" mt="2" ml="5">
             <HStack spacing={4}>
               <Text fontSize="2xl" fontWeight="bold" color="green.400">
                 <Icon as={FaCode} mr={2} /> Asim&apos;s Portfolio
@@ -300,7 +299,6 @@ const Navbar: React.FC = () => {
             </Drawer>
           </Container>
         </Box>
-      </Container>
     </motion.div>
   );
 };

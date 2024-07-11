@@ -47,7 +47,7 @@ export default function Home() {
         stiffness: 260,
       }}
     >
-      <Container maxW="container.xl" mx="auto" id="home" my={{ base: "100px", md: "80px" }}>
+      <Container maxW="container.xl" mx="auto" id="home" my={{ base: "90px", md: "80px" }}>
         <Box
           backgroundSize="cover"
           display="flex"

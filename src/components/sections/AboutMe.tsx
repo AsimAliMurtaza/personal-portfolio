@@ -79,7 +79,8 @@ export default function AboutMe() {
               flexDirection="column"
               justifyContent="center"
               alignItems="center"
-              bg="rgba(0, 0, 0, 0.2)" // Adjusted background color
+              bg="rgba(0, 0, 0, 0)" // Adjusted background color
+              variant="unstyled"
             >
               <Image
                 src={aboutMeData?.image}
@@ -98,10 +99,6 @@ export default function AboutMe() {
               </Text>
               <VStack align="start" spacing={2}>
                 <HStack>
-                  <Text color="green.100" fontWeight="bold">
-                    Birthday:
-                  </Text>
-                  <Text color="white">{aboutMeData?.birthday}</Text>
                 </HStack>
                 <HStack>
                   <Text color="green.100" fontWeight="bold">

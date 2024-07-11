@@ -69,12 +69,8 @@ export default function Skills() {
       animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
       transition={{ duration: 0.7 }}
     >
-      <Container
-        maxW="container.xl"
-        mx="auto"
-        id="home"
-        my={{ base: "100px", md: "80px" }}
-      >
+      <Container maxW="container.xl" mx="auto" my={{ base: "100px", md: "150px" }}>
+        
         <Heading
           as="h2"
           color={"green.400"}
@@ -91,7 +87,7 @@ export default function Skills() {
               All the skills that I have in the field of work are mentioned.
             </Text>
             <Grid
-              templateColumns="repeat(3, 1fr)"
+              templateColumns="repeat(2, 1fr)"
               gap={8}
               justifyContent="center"
             >
