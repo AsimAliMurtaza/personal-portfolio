@@ -12,9 +12,9 @@ import { FaFacebook, FaGithub, FaTwitter } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { fetchHomeData } from "@/lib/firebase";
 import { DocumentData } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import useInView from "@/lib/useInView";
 
-// Define interfaces for data
 interface HomeData extends DocumentData {
   description: string;
   image: string;
@@ -22,13 +22,15 @@ interface HomeData extends DocumentData {
 
 export default function Home() {
   const [homeData, setHomeData] = useState<HomeData | null>(null);
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, {rootMargin: "-200px"});
 
   useEffect(() => {
     const getData = async () => {
       try {
         const data = await fetchHomeData();
         console.log("Fetched data:", data);
-        setHomeData(data as HomeData); // Asserting data type to HomeData
+        setHomeData(data as HomeData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -38,8 +40,9 @@ export default function Home() {
 
   return (
     <motion.div
+      ref={ref}
       initial={{ opacity: 0, y: -250 }}
-      animate={{ opacity: 1, y: 0 }}
+      animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
       transition={{
         delay: 0.5,
         duration: 1,
@@ -47,7 +50,12 @@ export default function Home() {
         stiffness: 260,
       }}
     >
-      <Container maxW="container.xl" mx="auto" id="home" my={{ base: "90px", md: "80px" }}>
+      <Container
+        maxW="container.xl"
+        mx="auto"
+        id="home"
+        my={{ base: "20px", md: "10px" }}
+      >
         <Box
           backgroundSize="cover"
           display="flex"
@@ -92,9 +100,9 @@ export default function Home() {
                     color: "green.100",
                   },
                 }}
-                href="https://twitter.com/heyits_asim" // Corrected Twitter link
-                target="_blank" // Open link in a new tab
-                rel="noopener noreferrer" // Security best practice for external links
+                href="https://twitter.com/heyits_asim"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Icon as={FaTwitter} />
               </ChakraLink>
@@ -104,9 +112,9 @@ export default function Home() {
                     color: "green.100",
                   },
                 }}
-                href="https://facebook.com/asim90209" // Corrected Facebook link
-                target="_blank" // Open link in a new tab
-                rel="noopener noreferrer" // Security best practice for external links
+                href="https://facebook.com/asim90209"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Icon as={FaFacebook} />
               </ChakraLink>
@@ -117,8 +125,8 @@ export default function Home() {
                   },
                 }}
                 href="https://github.com/AsimAliMurtaza"
-                target="_blank" // Open link in a new tab
-                rel="noopener noreferrer" // Security best practice for external links
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Icon as={FaGithub} />
               </ChakraLink>

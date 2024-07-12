@@ -18,7 +18,6 @@ import useInView from "@/lib/useInView";
 import { fetchAboutMeData } from "@/lib/firebase";
 import { DocumentData } from "firebase/firestore";
 
-// Define interfaces for data
 interface AboutMeData extends DocumentData {
   description: string;
   image: string;
@@ -45,8 +44,8 @@ export default function AboutMe() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const data = await fetchAboutMeData(); // Assuming fetchAboutMeData is implemented to fetch data from Firestore
-        console.log("Fetched data:", data); // Log fetched data
+        const data = await fetchAboutMeData(); 
+        console.log("Fetched data:", data); 
         setAboutMeData(data as AboutMeData);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -62,7 +61,7 @@ export default function AboutMe() {
       animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
       transition={{ duration: 0.7 }}
     >
-     <Container maxW="container.xl" mx="auto" id="about" my={{ base: "100px", md: "150px" }}>
+     <Container maxW="container.xl" mx="auto" id="about" my={{ base: "100px", md: "80px" }}>
         <Heading
           as="h2"
           textAlign="center"
@@ -74,23 +73,22 @@ export default function AboutMe() {
         </Heading>
         <Grid templateColumns={{ base: "1fr", md: "1fr 2fr" }} gap={10} alignItems="center">
           <GridItem>
-            <Card
+            <Box
               display="flex"
               flexDirection="column"
               justifyContent="center"
               alignItems="center"
-              bg="rgba(0, 0, 0, 0)" // Adjusted background color
-              variant="unstyled"
+              bg="rgba(0, 0, 0, 0)" 
             >
               <Image
                 src={aboutMeData?.image}
                 alt="profile"
-                boxSize={{ base: "200px", md: "300px" }} // Adjusted image size for responsiveness
+                boxSize={{ base: "200px", md: "300px" }} 
                 objectFit="cover"
                 borderRadius="full"
                 mt={5}
               />
-            </Card>
+            </Box>
           </GridItem>
           <GridItem>
             <Box>

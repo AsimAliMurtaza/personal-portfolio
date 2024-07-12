@@ -28,7 +28,7 @@ interface Project {
 
 export default function Portfolio() {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, {rootMargin: "-200px"});
+  const isInView = useInView(ref, { rootMargin: "-200px" });
   const [projects, setProjects] = useState<Project[]>([]);
 
   useEffect(() => {
@@ -65,7 +65,12 @@ export default function Portfolio() {
       animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
       transition={{ duration: 0.7 }}
     >
-      <Container maxW="container.xl" mx="auto" id="portfolio" my={{ base: "100px", md: "80px" }}>
+      <Container
+        maxW="container.xl"
+        mx="auto"
+        id="portfolio"
+        my={{ base: "100px", md: "80px" }}
+      >
         <Heading
           as="h2"
           color="green.400"
@@ -85,26 +90,25 @@ export default function Portfolio() {
         >
           {projects.map((project) => (
             <GridItem key={project.id}>
-              <Card bg="rgba(0, 0, 0, 0.2)" borderRadius="10px">
-                <Box
-                  sx={{
-                    overflow: "hidden",
-                    borderRadius: "10px",
-                    "&:hover img": {
-                      transform: "scale(1.1)",
-                      transition: "transform 0.9s ease-in-out",
-                    },
-                  }}
-                >
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    borderRadius="10px"
-                    objectFit="cover"
-                    width="100%"
-                    height="200px"
-                  />
-                </Box>
+              <Box
+                backgroundSize="cover"
+                display="flex"
+                minHeight="50vh"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+                border="0"
+              >
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  borderRadius="10px"
+                  objectFit="cover"
+                  width="100%"
+                  height="200px"
+                />
+              </Box>
+              <Card bg="rgba(0, 0, 0, 0)" borderRadius="10px" variant="unstyled">
                 <CardBody>
                   <Heading
                     as="h3"

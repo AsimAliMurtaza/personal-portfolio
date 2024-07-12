@@ -69,7 +69,7 @@ export default function Skills() {
       animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
       transition={{ duration: 0.7 }}
     >
-      <Container maxW="container.xl" mx="auto" my={{ base: "100px", md: "150px" }}>
+      <Container maxW="container.xl" mx="auto" my={{ base: "100px", md: "80px" }}>
         
         <Heading
           as="h2"
