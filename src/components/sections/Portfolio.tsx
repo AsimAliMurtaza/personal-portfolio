@@ -90,25 +90,29 @@ export default function Portfolio() {
         >
           {projects.map((project) => (
             <GridItem key={project.id}>
-              <Box
-                backgroundSize="cover"
-                display="flex"
-                minHeight="50vh"
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="center"
-                border="0"
+              <Card
+                bg="rgba(0, 0, 0, 0)"
+                borderRadius="10px"
+                variant="unstyled"
               >
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  borderRadius="10px"
-                  objectFit="cover"
-                  width="100%"
-                  height="200px"
-                />
-              </Box>
-              <Card bg="rgba(0, 0, 0, 0)" borderRadius="10px" variant="unstyled">
+                <Box
+                  backgroundSize="cover"
+                  display="flex"
+                  minHeight="30vh"
+                  flexDirection="column"
+                  justifyContent="center"
+                  alignItems="center"
+                  border="0"
+                >
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    borderRadius="10px"
+                    objectFit="cover"
+                    width="100%"
+                    height="200px"
+                  />
+                </Box>
                 <CardBody>
                   <Heading
                     as="h3"
