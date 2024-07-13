@@ -90,6 +90,7 @@ export default function Portfolio() {
         >
           {projects.map((project) => (
             <motion.div
+              key={project.id}
               ref={ref}
               initial={{ opacity: 0, x: -200 }}
               animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : -200 }}
