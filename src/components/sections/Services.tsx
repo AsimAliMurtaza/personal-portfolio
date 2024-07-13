@@ -68,8 +68,8 @@ const Services = () => {
         </Heading>
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, x: -300, y: 200 }}
-          animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : -300, y: isInView ? 0 : 200 }}
+          initial={{ opacity: 0, x: -100, y: 100 }}
+          animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : -100, y: isInView ? 0 : 100 }}
           transition={{ duration: 0.7, delay: 0.5 }}
         >
           <Grid

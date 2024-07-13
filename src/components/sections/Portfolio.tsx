@@ -92,8 +92,8 @@ export default function Portfolio() {
             <motion.div
               key={project.id}
               ref={ref}
-              initial={{ opacity: 0, x: -200 }}
-              animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : -200 }}
+              initial={{ opacity: 0, x: -100 }}
+              animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : -100 }}
               transition={{ duration: 0.7, delay: 0.8 }}
             >
               <motion.div

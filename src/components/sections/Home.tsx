@@ -47,11 +47,11 @@ export default function Home() {
         duration: 0.5,
       }}
     >
-      <Container
+            <Container
         maxW="container.xl"
         mx="auto"
-        id="home"
-        my={{ base: "20px", md: "10px" }}
+        id="contact"
+        my={{ base: "100px", md: "80px" }}
       >
         <Box
           backgroundSize="cover"
