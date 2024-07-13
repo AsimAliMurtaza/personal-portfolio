@@ -23,7 +23,7 @@ interface HomeData extends DocumentData {
 export default function Home() {
   const [homeData, setHomeData] = useState<HomeData | null>(null);
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, {rootMargin: "-200px"});
+  const isInView = useInView(ref, { rootMargin: "-200px" });
 
   useEffect(() => {
     const getData = async () => {
@@ -41,13 +41,10 @@ export default function Home() {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: -250 }}
+      initial={{ opacity: 0, y: 100 }}
       animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
       transition={{
-        delay: 0.5,
-        duration: 1,
-        type: "keyframes",
-        stiffness: 260,
+        duration: 0.5,
       }}
     >
       <Container
@@ -65,72 +62,102 @@ export default function Home() {
           alignItems="center"
           color="white"
         >
-          <Box borderRadius="full" overflow="hidden">
-            <Image
-              src={homeData?.image}
-              alt="profile-pic"
-              boxSize={{ base: "150px", md: "200px" }}
-              objectFit="cover"
-            />
-          </Box>
+          <motion.div
+            ref={ref}
+            initial={{ opacity: 0, y: 100 }}
+            animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
+            transition={{
+              duration: 0.5,
+            }}
+          >
+            <Box borderRadius="full" overflow="hidden">
+              <Image
+                src={homeData?.image}
+                alt="profile-pic"
+                boxSize={{ base: "150px", md: "200px" }}
+                objectFit="cover"
+              />
+            </Box>
+          </motion.div>
 
           <Container maxW="container.md" textAlign="center" mt={10}>
-            <Heading as="h1" size="xl">
-              Hi, I am
-            </Heading>
-            <Heading as="h2" size="2xl" color="green.100">
-              Muhammad Asim Ali Murtaza
-            </Heading>
+            <motion.div
+              ref={ref}
+              initial={{ opacity: 0, y: 100 }}
+              animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
+              transition={{
+                delay: 0.5,
+                duration: 0.5,
+              }}
+            >
+              <Heading as="h1" size="xl">
+                Hi, I am
+              </Heading>
+
+              <Heading as="h2" size="2xl" color="green.100">
+                Muhammad Asim Ali Murtaza
+              </Heading>
+            </motion.div>
           </Container>
 
           <Container maxW="container.md" textAlign="center" mt={10}>
-            <Text>{homeData?.description}</Text>
-            <Box
-              mt={5}
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "20px",
+            <motion.div
+              ref={ref}
+              initial={{ opacity: 0, y: 100 }}
+              animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
+              transition={{
+                delay: 1,
+                duration: 0.5,
               }}
             >
-              <ChakraLink
+              <Text>{homeData?.description}</Text>
+              <Box
+                mt={5}
                 sx={{
-                  _hover: {
-                    color: "green.100",
-                  },
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "20px",
                 }}
-                href="https://twitter.com/heyits_asim"
-                target="_blank"
-                rel="noopener noreferrer"
               >
-                <Icon as={FaTwitter} />
-              </ChakraLink>
-              <ChakraLink
-                sx={{
-                  _hover: {
-                    color: "green.100",
-                  },
-                }}
-                href="https://facebook.com/asim90209"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Icon as={FaFacebook} />
-              </ChakraLink>
-              <ChakraLink
-                sx={{
-                  _hover: {
-                    color: "green.100",
-                  },
-                }}
-                href="https://github.com/AsimAliMurtaza"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Icon as={FaGithub} />
-              </ChakraLink>
-            </Box>
+                <ChakraLink
+                  sx={{
+                    _hover: {
+                      color: "green.100",
+                    },
+                  }}
+                  href="https://twitter.com/heyits_asim"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon as={FaTwitter} />
+                </ChakraLink>
+                <ChakraLink
+                  sx={{
+                    _hover: {
+                      color: "green.100",
+                    },
+                  }}
+                  href="https://facebook.com/asim90209"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon as={FaFacebook} />
+                </ChakraLink>
+                <ChakraLink
+                  sx={{
+                    _hover: {
+                      color: "green.100",
+                    },
+                  }}
+                  href="https://github.com/AsimAliMurtaza"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon as={FaGithub} />
+                </ChakraLink>
+              </Box>
+            </motion.div>
           </Container>
         </Box>
       </Container>

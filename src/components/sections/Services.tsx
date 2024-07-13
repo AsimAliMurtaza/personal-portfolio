@@ -60,40 +60,47 @@ const Services = () => {
         mx="auto"
         display="flex"
         flexDirection="column"
-        alignItems="center"        
+        alignItems="center"
         my={{ base: "100px", md: "80px" }}
       >
         <Heading as="h2" color="green.400" mb={10} fontWeight="thin">
           SERVICES
         </Heading>
-        <Grid
-          templateColumns={{
-            base: "1fr",
-            md: "1fr 1fr",
-            lg: "1fr 1fr 1fr 1fr",
-          }}
-          gap={5}
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, x: -300, y: 200 }}
+          animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : -300, y: isInView ? 0 : 200 }}
+          transition={{ duration: 0.7, delay: 0.5 }}
         >
-          {services.map((service) => (
-            <GridItem key={service.id}>
-              <Box
-                bg="rgba(255, 255, 255, 0.2)"
-                p={5}
-                borderRadius="10px"
-                height="100%"
-                display="flex"
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Heading as="h3" size="xl" color="green.100" mb={3}>
-                  {service.title}
-                </Heading>
-                <Text color="white">{service.description}</Text>
-              </Box>
-            </GridItem>
-          ))}
-        </Grid>
+          <Grid
+            templateColumns={{
+              base: "1fr",
+              md: "1fr 1fr",
+              lg: "1fr 1fr 1fr 1fr",
+            }}
+            gap={5}
+          >
+            {services.map((service) => (
+              <GridItem key={service.id}>
+                <Box
+                  bg="rgba(255, 255, 255, 0.2)"
+                  p={5}
+                  borderRadius="10px"
+                  height="100%"
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Heading as="h3" size="xl" color="green.100" mb={3}>
+                    {service.title}
+                  </Heading>
+                  <Text color="white">{service.description}</Text>
+                </Box>
+              </GridItem>
+            ))}
+          </Grid>
+        </motion.div>
       </Container>
     </motion.div>
   );

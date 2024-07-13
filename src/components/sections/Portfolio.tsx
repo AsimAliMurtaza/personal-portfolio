@@ -61,8 +61,8 @@ export default function Portfolio() {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 100 }}
-      animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
+      initial={{ opacity: 0, x: 100 }}
+      animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : 100 }}
       transition={{ duration: 0.7 }}
     >
       <Container
@@ -89,31 +89,37 @@ export default function Portfolio() {
           gap={5}
         >
           {projects.map((project) => (
-            <GridItem key={project.id}>
-              <Card
-                bg="rgba(0, 0, 0, 0)"
-                borderRadius="10px"
-                variant="unstyled"
+            <motion.div
+              ref={ref}
+              initial={{ opacity: 0, x: -200 }}
+              animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : -200 }}
+              transition={{ duration: 0.7, delay: 0.8 }}
+            >
+              <motion.div
+                key={project.id}
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.2 }}
               >
-                <Box
-                  backgroundSize="cover"
-                  display="flex"
-                  minHeight="30vh"
-                  flexDirection="column"
-                  justifyContent="center"
-                  alignItems="center"
-                  border="0"
-                >
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    borderRadius="10px"
-                    objectFit="cover"
-                    width="100%"
-                    height="200px"
-                  />
-                </Box>
-                <CardBody>
+                <GridItem key={project.id}>
+                  <Box
+                    backgroundSize="cover"
+                    display="flex"
+                    minHeight="30vh"
+                    flexDirection="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    border="0"
+                  >
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      borderRadius="10px"
+                      objectFit="cover"
+                      width="100%"
+                      height="200px"
+                    />
+                  </Box>
                   <Heading
                     as="h3"
                     size="xl"
@@ -146,9 +152,9 @@ export default function Portfolio() {
                       View on Github
                     </Link>
                   </Text>
-                </CardBody>
-              </Card>
-            </GridItem>
+                </GridItem>
+              </motion.div>
+            </motion.div>
           ))}
         </Grid>
       </Container>

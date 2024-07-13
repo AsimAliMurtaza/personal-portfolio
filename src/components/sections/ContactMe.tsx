@@ -33,7 +33,7 @@ interface ContactData extends DocumentData {
 
 export default function ContactMe() {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, {rootMargin: "-200px"});
+  const isInView = useInView(ref, { rootMargin: "-200px" });
 
   const [contactData, setContactData] = useState<ContactData | null>(null);
   const [formData, setFormData] = useState({
@@ -67,32 +67,32 @@ export default function ContactMe() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // try {
-    //   await emailjs.send(
-    //     "service_xiizqqq",
-    //     "template_vz3i66q",
-    //     formData,
-    //     "TRga4OXOfsikRc02H"
-    //   );
-    //   toast({
-    //     title: "Message Sent.",
-    //     description: "Your message has been sent successfully.",
-    //     status: "success",
-    //     duration: 5000,
-    //     isClosable: true,
-    //   });
-    //   setFormData({ name: "", email: "", subject: "", message: "" });
-    // } catch (error) {
-    //   console.error("Error sending message:", error);
+    try {
+      await emailjs.send(
+        "service_xiizqqq",
+        "template_vz3i66q",
+        formData,
+        "TRga4OXOfsikRc02H"
+      );
       toast({
-        title: "Error.",
-        description:
-          "Sending messages have been disabled. Please try again later",
-        status: "error",
+        title: "Message Sent.",
+        description: "Your message has been sent successfully.",
+        status: "success",
         duration: 5000,
         isClosable: true,
       });
-    // }
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } catch (error) {
+      console.error("Error sending message:", error);
+    toast({
+      title: "Error.",
+      description:
+        "Sending messages have been disabled. Please try again later",
+      status: "error",
+      duration: 5000,
+      isClosable: true,
+    });
+    }
   };
 
   return (
@@ -102,7 +102,12 @@ export default function ContactMe() {
       animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
       transition={{ duration: 0.7 }}
     >
-      <Container maxW="container.xl" mx="auto" id="contact" my={{ base: "100px", md: "80px" }}>
+      <Container
+        maxW="container.xl"
+        mx="auto"
+        id="contact"
+        my={{ base: "100px", md: "80px" }}
+      >
         <Heading
           as="h2"
           size="xl"
@@ -115,89 +120,103 @@ export default function ContactMe() {
         </Heading>
         <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={10}>
           <GridItem>
-            <Box>
-              <Heading as="h2" size="lg" color="green.100" mb={5}>
-                Just say Hello
-              </Heading>
-              <form onSubmit={handleSubmit}>
-                <VStack spacing={5} align="start">
-                  <Input
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    placeholder="Your Name"
-                    variant="outline"
-                    focusBorderColor="green.100"
-                    color="white"
-                  />
-                  <Input
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="Your Email"
-                    variant="outline"
-                    focusBorderColor="green.100"
-                    color="white"
-                  />
-                  <Input
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleInputChange}
-                    placeholder="Your Subject"
-                    variant="outline"
-                    focusBorderColor="green.100"
-                    color="white"
-                  />
-                  <Textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    placeholder="Your Message"
-                    variant="outline"
-                    focusBorderColor="green.100"
-                    color="white"
-                  />
-                  <Button
-                    type="submit"
-                    colorScheme="green"
-                    alignSelf="flex-start"
-                  >
-                    Send Message
-                  </Button>
-                </VStack>
-              </form>
-            </Box>
+            <motion.div
+              ref={ref}
+              initial={{ opacity: 0, y: 200 }}
+              animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 200 }}
+              transition={{ duration: 1, delay: 0.5 }}
+            >
+              <Box>
+                <Heading as="h2" size="lg" color="green.100" mb={5}>
+                  Just say Hello
+                </Heading>
+                <form onSubmit={handleSubmit}>
+                  <VStack spacing={5} align="start">
+                    <Input
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      placeholder="Your Name"
+                      variant="outline"
+                      focusBorderColor="green.100"
+                      color="white"
+                    />
+                    <Input
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder="Your Email"
+                      variant="outline"
+                      focusBorderColor="green.100"
+                      color="white"
+                    />
+                    <Input
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleInputChange}
+                      placeholder="Your Subject"
+                      variant="outline"
+                      focusBorderColor="green.100"
+                      color="white"
+                    />
+                    <Textarea
+                      name="message"
+                      value={formData.message}
+                      onChange={handleInputChange}
+                      placeholder="Your Message"
+                      variant="outline"
+                      focusBorderColor="green.100"
+                      color="white"
+                    />
+                    <Button
+                      type="submit"
+                      colorScheme="green"
+                      alignSelf="flex-start"
+                    >
+                      Send Message
+                    </Button>
+                  </VStack>
+                </form>
+              </Box>
+            </motion.div>
           </GridItem>
           <GridItem>
-            <Box>
-              <Heading as="h2" size="lg" color="green.100" mb={5}>
-                Contact Info
-              </Heading>
-              <VStack align="start" spacing={5} color="white">
-                <Text>{contactData?.description}</Text>
-                <HStack spacing={4}>
-                  <FaEnvelope />
-                  <VStack align="start" spacing={1}>
-                    <Text color="green.100">Email</Text>
-                    <Text>{contactData?.email}</Text>
-                  </VStack>
-                </HStack>
-                <HStack spacing={4}>
-                  <FaPhone />
-                  <VStack align="start" spacing={1}>
-                    <Text color="green.100">Phone</Text>
-                    <Text>{contactData?.phone}</Text>
-                  </VStack>
-                </HStack>
-                <HStack spacing={4}>
-                  <FaMapMarkerAlt />
-                  <VStack align="start" spacing={1}>
-                    <Text color="green.100">Address</Text>
-                    <Text>{contactData?.address}</Text>
-                  </VStack>
-                </HStack>
-              </VStack>
-            </Box>
+            <motion.div
+              ref={ref}
+              initial={{ opacity: 0, x: 200 }}
+              animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : 200 }}
+              transition={{ duration: 1, delay: 0.8 }}
+            >
+              <Box>
+                <Heading as="h2" size="lg" color="green.100" mb={5}>
+                  Contact Info
+                </Heading>
+                <VStack align="start" spacing={5} color="white">
+                  <Text>{contactData?.description}</Text>
+                  <HStack spacing={4}>
+                    <FaEnvelope />
+                    <VStack align="start" spacing={1}>
+                      <Text color="green.100">Email</Text>
+                      <Text>{contactData?.email}</Text>
+                    </VStack>
+                  </HStack>
+                  <HStack spacing={4}>
+                    <FaPhone />
+                    <VStack align="start" spacing={1}>
+                      <Text color="green.100">Phone</Text>
+                      <Text>{contactData?.phone}</Text>
+                    </VStack>
+                  </HStack>
+                  <HStack spacing={4}>
+                    <FaMapMarkerAlt />
+                    <VStack align="start" spacing={1}>
+                      <Text color="green.100">Address</Text>
+                      <Text>{contactData?.address}</Text>
+                    </VStack>
+                  </HStack>
+                </VStack>
+              </Box>
+            </motion.div>
           </GridItem>
         </Grid>
       </Container>

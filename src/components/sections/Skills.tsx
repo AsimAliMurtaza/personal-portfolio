@@ -69,8 +69,11 @@ export default function Skills() {
       animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
       transition={{ duration: 0.7 }}
     >
-      <Container maxW="container.xl" mx="auto" my={{ base: "100px", md: "80px" }}>
-        
+      <Container
+        maxW="container.xl"
+        mx="auto"
+        my={{ base: "100px", md: "80px" }}
+      >
         <Heading
           as="h2"
           color={"green.400"}
@@ -81,71 +84,89 @@ export default function Skills() {
         >
           SKILLS
         </Heading>
-        <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={10}>
-          <GridItem>
-            <Text fontSize="xl" fontWeight="bold" mb={4} color={"green.100"}>
-              All the skills that I have in the field of work are mentioned.
-            </Text>
-            <Grid
-              templateColumns="repeat(2, 1fr)"
-              gap={8}
-              justifyContent="center"
-            >
-              <GridItem>
-                <VStack spacing={4} align="center">
-                  <Box>
-                    <Icon as={FaNodeJs} boxSize={32} color="green.100" />
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : 100 }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+        >
+          <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={10}>
+            <GridItem>
+              <Text fontSize="xl" fontWeight="bold" mb={4} color={"green.100"}>
+                All the skills that I have in the field of work are mentioned.
+              </Text>
+              <motion.div
+                ref={ref}
+                initial={{ opacity: 0, y: 100 }}
+                animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
+                transition={{ duration: 0.7, delay: 0.6 }}
+              >
+                <Grid
+                  templateColumns="repeat(2, 1fr)"
+                  gap={8}
+                  justifyContent="center"
+                >
+                  <GridItem>
+                    <VStack spacing={4} align="center">
+                      <Box>
+                        <Icon as={FaNodeJs} boxSize={32} color="green.100" />
+                      </Box>
+                    </VStack>
+                  </GridItem>
+                  <GridItem>
+                    <VStack spacing={4} align="center">
+                      <Box>
+                        <Icon as={FaReact} boxSize={32} color="green.100" />
+                      </Box>
+                    </VStack>
+                  </GridItem>
+                  <GridItem>
+                    <VStack spacing={4} align="center">
+                      <Box>
+                        <Icon as={FaPython} boxSize={32} color="green.100" />
+                      </Box>
+                    </VStack>
+                  </GridItem>
+                  <GridItem>
+                    <VStack spacing={4} align="center">
+                      <Box>
+                        <Icon as={FaHtml5} boxSize={32} color="green.100" />
+                      </Box>
+                    </VStack>
+                  </GridItem>
+                  <GridItem>
+                    <VStack spacing={4} align="center">
+                      <Box>
+                        <Icon as={FaCss3} boxSize={32} color="green.100" />
+                      </Box>
+                    </VStack>
+                  </GridItem>
+                  <GridItem>
+                    <VStack spacing={4} align="center">
+                      <Box>
+                        <Icon as={FaGit} boxSize={32} color="green.100" />
+                      </Box>
+                    </VStack>
+                  </GridItem>
+                </Grid>
+              </motion.div>
+            </GridItem>
+            <GridItem>
+              <VStack spacing={6} align="start">
+                {skills.map((skill) => (
+                  <Box key={skill.id} width="100%">
+                    <Text color="green.100">{skill.skill}</Text>
+                    <Progress
+                      colorScheme="green"
+                      size="sm"
+                      value={skill.value}
+                    />
                   </Box>
-                </VStack>
-              </GridItem>
-              <GridItem>
-                <VStack spacing={4} align="center">
-                  <Box>
-                    <Icon as={FaReact} boxSize={32} color="green.100" />
-                  </Box>
-                </VStack>
-              </GridItem>
-              <GridItem>
-                <VStack spacing={4} align="center">
-                  <Box>
-                    <Icon as={FaPython} boxSize={32} color="green.100" />
-                  </Box>
-                </VStack>
-              </GridItem>
-              <GridItem>
-                <VStack spacing={4} align="center">
-                  <Box>
-                    <Icon as={FaHtml5} boxSize={32} color="green.100" />
-                  </Box>
-                </VStack>
-              </GridItem>
-              <GridItem>
-                <VStack spacing={4} align="center">
-                  <Box>
-                    <Icon as={FaCss3} boxSize={32} color="green.100" />
-                  </Box>
-                </VStack>
-              </GridItem>
-              <GridItem>
-                <VStack spacing={4} align="center">
-                  <Box>
-                    <Icon as={FaGit} boxSize={32} color="green.100" />
-                  </Box>
-                </VStack>
-              </GridItem>
-            </Grid>
-          </GridItem>
-          <GridItem>
-            <VStack spacing={6} align="start">
-              {skills.map((skill) => (
-                <Box key={skill.id} width="100%">
-                  <Text color="green.100">{skill.skill}</Text>
-                  <Progress colorScheme="green" size="sm" value={skill.value} />
-                </Box>
-              ))}
-            </VStack>
-          </GridItem>
-        </Grid>
+                ))}
+              </VStack>
+            </GridItem>
+          </Grid>
+        </motion.div>
       </Container>
     </motion.div>
   );

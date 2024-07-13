@@ -33,7 +33,7 @@ interface Experience {
 
 export default function Resume() {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, {rootMargin: "-200px"});
+  const isInView = useInView(ref, { rootMargin: "-200px" });
   const [education, setEducation] = useState<Education[]>([]);
   const [experience, setExperience] = useState<Experience[]>([]);
 
@@ -94,7 +94,12 @@ export default function Resume() {
       animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
       transition={{ duration: 0.7 }}
     >
-           <Container maxW="container.xl" mx="auto" id="resume" my={{ base: "100px", md: "80px" }}>
+      <Container
+        maxW="container.xl"
+        mx="auto"
+        id="resume"
+        my={{ base: "100px", md: "80px" }}
+      >
         <Heading
           as="h2"
           size="xl"
@@ -107,42 +112,55 @@ export default function Resume() {
         </Heading>
         <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={10}>
           <GridItem>
-            <Box>
-              <HStack align="center" mb={5}>
-                <FaGraduationCap size={24} color="white" />
-                <Heading as="h2" size="lg" color="green.100">
-                  Education
-                </Heading>
-              </HStack>
-              <VStack align="start" spacing={5}>
-                {education.map((edu) => (
-                  <Box
-                    key={edu.id}
-                    borderLeft="2px solid gray"
-                    pl={5}
-                    position="relative"
-                  >
+            <motion.div
+              ref={ref}
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : 100 }}
+              transition={{ duration: 0.7, delay: 0.7 }}
+            >
+              <Box>
+                <HStack align="center" mb={5}>
+                  <FaGraduationCap size={24} color="white" />
+                  <Heading as="h2" size="lg" color="green.100">
+                    Education
+                  </Heading>
+                </HStack>
+                <VStack align="start" spacing={5}>
+                  {education.map((edu) => (
                     <Box
-                      position="absolute"
-                      left="-10px"
-                      top="10px"
-                      boxSize={4}
-                      bg="green.400"
-                      borderRadius="full"
-                    />
-                    <Text fontWeight="bold" color="green.400" fontSize="xl">
-                      {edu.degree}
-                    </Text>
-                    <Text color="gray.400">{edu.year}</Text>
-                    <Text color="white" fontWeight="bold">
-                      {edu.institution}
-                    </Text>
-                  </Box>
-                ))}
-              </VStack>
-            </Box>
+                      key={edu.id}
+                      borderLeft="2px solid gray"
+                      pl={5}
+                      position="relative"
+                    >
+                      <Box
+                        position="absolute"
+                        left="-10px"
+                        top="10px"
+                        boxSize={4}
+                        bg="green.400"
+                        borderRadius="full"
+                      />
+                      <Text fontWeight="bold" color="green.400" fontSize="xl">
+                        {edu.degree}
+                      </Text>
+                      <Text color="gray.400">{edu.year}</Text>
+                      <Text color="white" fontWeight="bold">
+                        {edu.institution}
+                      </Text>
+                    </Box>
+                  ))}
+                </VStack>
+              </Box>
+            </motion.div>
           </GridItem>
           <GridItem>
+          <motion.div
+      ref={ref}
+      initial={{ opacity: 0, x: 100 }}
+      animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : 100 }}
+      transition={{ duration: 0.7, delay: 1}}
+    >
             <Box>
               <HStack align="center" mb={5}>
                 <FaBriefcase size={24} color="white" />
@@ -177,6 +195,7 @@ export default function Resume() {
                 ))}
               </VStack>
             </Box>
+          </motion.div>
           </GridItem>
         </Grid>
       </Container>

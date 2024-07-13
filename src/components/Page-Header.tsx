@@ -38,267 +38,256 @@ const Navbar: React.FC = () => {
         damping: 20,
       }}
     >
-        <Box
-          as="nav"
-          position="fixed"
-          top="0"
-          width="100%"
-          height="60px"
-          bg="rgba(0.3,0.2,0.39, 0.4)" // Semi-transparent background
-          color="white"
-          
-        >
-          <Flex align="center" mt="2" ml="5">
-            <HStack spacing={4}>
-              <Text fontSize="2xl" fontWeight="bold" color="green.400">
-                <Icon as={FaCode} mr={2} /> Asim&apos;s Portfolio
-              </Text>
-              <HStack
-                as="nav"
-                spacing={4}
-                display={{ base: "none", md: "flex" }}
-              >
-                <ScrollLink to="home" smooth={true} duration={500} offset={-70}>
-                  <ChakraLink
-                    sx={{
-                      _hover: {
-                        color: "green.400",
-                      },
-                    }}
-                  >
-                    HOME
-                  </ChakraLink>
-                </ScrollLink>
-                <ScrollLink
-                  to="about"
-                  smooth={true}
-                  duration={500}
-                  offset={-70}
-                >
-                  <ChakraLink
-                    sx={{
-                      _hover: {
-                        color: "green.400",
-                      },
-                    }}
-                  >
-                    ABOUT
-                  </ChakraLink>
-                </ScrollLink>
-                <ScrollLink
-                  to="resume"
-                  smooth={true}
-                  duration={500}
-                  offset={-70}
-                >
-                  <ChakraLink
-                    sx={{
-                      _hover: {
-                        color: "green.400",
-                      },
-                    }}
-                  >
-                    RESUME
-                  </ChakraLink>
-                </ScrollLink>
-                <ScrollLink
-                  to="portfolio"
-                  smooth={true}
-                  duration={500}
-                  offset={-70}
-                >
-                  <ChakraLink
-                    sx={{
-                      _hover: {
-                        color: "green.400",
-                      },
-                    }}
-                  >
-                    PORTFOLIO
-                  </ChakraLink>
-                </ScrollLink>
-
-                <ScrollLink
-                  to="contact"
-                  smooth={true}
-                  duration={500}
-                  offset={-70}
-                >
-                  <ChakraLink
-                    sx={{
-                      _hover: {
-                        color: "green.400",
-                      },
-                    }}
-                  >
-                    CONTACT
-                  </ChakraLink>
-                </ScrollLink>
-              </HStack>
-            </HStack>
-            <Spacer />
-            <HStack
-              spacing={4}
-              display={{ base: "none", md: "flex" }}
-              marginRight={10}
-            >
-              <ChakraLink
-                sx={{
-                  _hover: {
-                    color: "green.400",
-                  },
-                }}
-                href="mailto:mo.asim.murtaza@gmail.com"
-              >
-                <Icon as={MdEmail} />
-              </ChakraLink>
-              <ChakraLink
-                sx={{
-                  _hover: {
-                    color: "green.400",
-                  },
-                }}
-                href="https://x.com/heyits_asim"
-              >
-                <Icon as={FaTwitter} />
-              </ChakraLink>
-              <ChakraLink
-                sx={{
-                  _hover: {
-                    color: "green.400",
-                  },
-                }}
-                href="https://www.linkedin.com/asimalimurtaza"
-              >
-                <Icon as={FaLinkedin} />
-              </ChakraLink>
-            </HStack>
-            <IconButton
-              aria-label="Open Menu"
-              icon={<HiMenu />}
-              display={{ base: "flex", md: "none" }}
-              onClick={onOpen}
-            />
-          </Flex>
-          <Container maxW="container.xl" mx="auto" my={{ base: "100px", md: "80px" }}>
-            <Drawer placement="right" onClose={onClose} isOpen={isOpen}>
-              <DrawerOverlay />
-              <DrawerContent
-                sx={{
-                  backdropFilter: "blur(5px)",
-                  backgroundColor: "rgba(0, 0, 0, 0.2)",
-                  color: "white",
-                  borderRadius: "10px",
-                }}
-              >
-                <DrawerCloseButton
+      <Box
+        as="nav"
+        position="fixed"
+        top="0"
+        width="100%"
+        height="60px"
+        bg="rgba(0.3,0.2,0.39, 0.4)"
+        color="white"
+      >
+        <Flex align="center" mt="2" ml="5">
+          <HStack spacing={4}>
+            <Text fontSize="2xl" fontWeight="bold" color="green.400">
+              <Icon as={FaCode} mr={2} /> Asim
+            </Text>
+            <HStack as="nav" spacing={4} display={{ base: "none", md: "flex" }}>
+              <ScrollLink to="home" smooth={true} duration={500} offset={-70}>
+                <ChakraLink
                   sx={{
                     _hover: {
-                      color: "green.100",
+                      color: "green.400",
                     },
                   }}
-                />
-                <DrawerHeader
+                >
+                  HOME
+                </ChakraLink>
+              </ScrollLink>
+              <ScrollLink to="about" smooth={true} duration={500} offset={-70}>
+                <ChakraLink
                   sx={{
-                    color: "green.400",
+                    _hover: {
+                      color: "green.400",
+                    },
                   }}
                 >
-                  Personal Portfolio
-                </DrawerHeader>
-                <DrawerBody>
-                  <VStack as="nav" spacing={4} alignItems="left">
-                    <ScrollLink
-                      to="home"
-                      smooth={true}
-                      duration={500}
-                      offset={-70}
-                      onClick={onClose}
-                    >
-                      <ChakraLink
-                        sx={{
-                          _hover: {
-                            color: "green.100",
-                          },
-                        }}
-                      >
-                        HOME
-                      </ChakraLink>
-                    </ScrollLink>
-                    <ScrollLink
-                      to="about"
-                      smooth={true}
-                      duration={500}
-                      offset={-70}
-                      onClick={onClose}
-                    >
-                      <ChakraLink
-                        sx={{
-                          _hover: {
-                            color: "green.100",
-                          },
-                        }}
-                      >
-                        ABOUT
-                      </ChakraLink>
-                    </ScrollLink>
-                    <ScrollLink
-                      to="resume"
-                      smooth={true}
-                      duration={500}
-                      offset={-70}
-                      onClick={onClose}
-                    >
-                      <ChakraLink
-                        sx={{
-                          _hover: {
-                            color: "green.100",
-                          },
-                        }}
-                      >
-                        RESUME
-                      </ChakraLink>
-                    </ScrollLink>
-                    <ScrollLink
-                      to="portfolio"
-                      smooth={true}
-                      duration={500}
-                      offset={-70}
-                      onClick={onClose}
-                    >
-                      <ChakraLink
-                        sx={{
-                          _hover: {
-                            color: "green.100",
-                          },
-                        }}
-                      >
-                        PORTFOLIO
-                      </ChakraLink>
-                    </ScrollLink>
+                  ABOUT
+                </ChakraLink>
+              </ScrollLink>
+              <ScrollLink to="resume" smooth={true} duration={500} offset={-70}>
+                <ChakraLink
+                  sx={{
+                    _hover: {
+                      color: "green.400",
+                    },
+                  }}
+                >
+                  RESUME
+                </ChakraLink>
+              </ScrollLink>
+              <ScrollLink
+                to="portfolio"
+                smooth={true}
+                duration={500}
+                offset={-70}
+              >
+                <ChakraLink
+                  sx={{
+                    _hover: {
+                      color: "green.400",
+                    },
+                  }}
+                >
+                  PORTFOLIO
+                </ChakraLink>
+              </ScrollLink>
 
-                    <ScrollLink
-                      to="contact"
-                      smooth={true}
-                      duration={500}
-                      offset={-70}
-                      onClick={onClose}
+              <ScrollLink
+                to="contact"
+                smooth={true}
+                duration={500}
+                offset={-70}
+              >
+                <ChakraLink
+                  sx={{
+                    _hover: {
+                      color: "green.400",
+                    },
+                  }}
+                >
+                  CONTACT
+                </ChakraLink>
+              </ScrollLink>
+            </HStack>
+          </HStack>
+          <Spacer />
+          <HStack
+            spacing={4}
+            display={{ base: "none", md: "flex" }}
+            marginRight={10}
+          >
+            <ChakraLink
+              sx={{
+                _hover: {
+                  color: "green.400",
+                },
+              }}
+              href="mailto:mo.asim.murtaza@gmail.com"
+            >
+              <Icon as={MdEmail} />
+            </ChakraLink>
+            <ChakraLink
+              sx={{
+                _hover: {
+                  color: "green.400",
+                },
+              }}
+              href="https://x.com/heyits_asim"
+            >
+              <Icon as={FaTwitter} />
+            </ChakraLink>
+            <ChakraLink
+              sx={{
+                _hover: {
+                  color: "green.400",
+                },
+              }}
+              href="https://www.linkedin.com/asimalimurtaza"
+            >
+              <Icon as={FaLinkedin} />
+            </ChakraLink>
+          </HStack>
+          <IconButton
+            aria-label="Open Menu"
+            icon={<HiMenu />}
+            display={{ base: "flex", md: "none" }}
+            onClick={onOpen}
+          />
+        </Flex>
+        <Container
+          maxW="container.xl"
+          mx="auto"
+          my={{ base: "100px", md: "80px" }}
+        >
+          <Drawer placement="right" onClose={onClose} isOpen={isOpen}>
+            <DrawerOverlay />
+            <DrawerContent
+              sx={{
+                backdropFilter: "blur(5px)",
+                backgroundColor: "rgba(0, 0, 0, 0.2)",
+                color: "white",
+                borderRadius: "10px",
+              }}
+            >
+              <DrawerCloseButton
+                sx={{
+                  _hover: {
+                    color: "green.100",
+                  },
+                }}
+              />
+              <DrawerHeader
+                sx={{
+                  color: "green.400",
+                }}
+              >
+                Portfolio
+              </DrawerHeader>
+              <DrawerBody>
+                <VStack as="nav" spacing={4} alignItems="left">
+                  <ScrollLink
+                    to="home"
+                    smooth={true}
+                    duration={500}
+                    offset={-70}
+                    onClick={onClose}
+                  >
+                    <ChakraLink
+                      sx={{
+                        _hover: {
+                          color: "green.100",
+                        },
+                      }}
                     >
-                      <ChakraLink
-                        sx={{
-                          _hover: {
-                            color: "green.100",
-                          },
-                        }}
-                      >
-                        CONTACT
-                      </ChakraLink>
-                    </ScrollLink>
-                  </VStack>
-                </DrawerBody>
-              </DrawerContent>
-            </Drawer>
-          </Container>
-        </Box>
+                      HOME
+                    </ChakraLink>
+                  </ScrollLink>
+                  <ScrollLink
+                    to="about"
+                    smooth={true}
+                    duration={500}
+                    offset={-70}
+                    onClick={onClose}
+                  >
+                    <ChakraLink
+                      sx={{
+                        _hover: {
+                          color: "green.100",
+                        },
+                      }}
+                    >
+                      ABOUT
+                    </ChakraLink>
+                  </ScrollLink>
+                  <ScrollLink
+                    to="resume"
+                    smooth={true}
+                    duration={500}
+                    offset={-70}
+                    onClick={onClose}
+                  >
+                    <ChakraLink
+                      sx={{
+                        _hover: {
+                          color: "green.100",
+                        },
+                      }}
+                    >
+                      RESUME
+                    </ChakraLink>
+                  </ScrollLink>
+                  <ScrollLink
+                    to="portfolio"
+                    smooth={true}
+                    duration={500}
+                    offset={-70}
+                    onClick={onClose}
+                  >
+                    <ChakraLink
+                      sx={{
+                        _hover: {
+                          color: "green.100",
+                        },
+                      }}
+                    >
+                      PORTFOLIO
+                    </ChakraLink>
+                  </ScrollLink>
+
+                  <ScrollLink
+                    to="contact"
+                    smooth={true}
+                    duration={500}
+                    offset={-70}
+                    onClick={onClose}
+                  >
+                    <ChakraLink
+                      sx={{
+                        _hover: {
+                          color: "green.100",
+                        },
+                      }}
+                    >
+                      CONTACT
+                    </ChakraLink>
+                  </ScrollLink>
+                </VStack>
+              </DrawerBody>
+            </DrawerContent>
+          </Drawer>
+        </Container>
+      </Box>
     </motion.div>
   );
 };
