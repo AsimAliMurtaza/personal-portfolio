@@ -70,7 +70,7 @@ export default function Skills() {
       transition={{ duration: 0.7 }}
     >
       <Container
-        maxW="container.xl"
+        maxW="100%"
         mx="auto"
         my={{ base: "100px", md: "80px" }}
       >
@@ -86,8 +86,8 @@ export default function Skills() {
         </Heading>
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, x: 100 }}
-          animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : 100 }}
+          initial={{ opacity: 0, y: 100 }}
+          animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
           transition={{ duration: 0.7, delay: 0.3 }}
         >
           <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={10}>

@@ -8,7 +8,6 @@ import {
   Icon,
   HStack,
   VStack,
-  Container,
   useDisclosure,
   Drawer,
   DrawerBody,
@@ -17,6 +16,7 @@ import {
   DrawerContent,
   DrawerCloseButton,
   IconButton,
+  Container,
 } from "@chakra-ui/react";
 import { FaTwitter, FaLinkedin, FaCode } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
@@ -38,16 +38,18 @@ const Navbar: React.FC = () => {
         damping: 20,
       }}
     >
-      <Box
+      <Container
         as="nav"
+        maxW="100%"
         position="fixed"
         top="0"
-        width="100%"
         height="60px"
         bg="rgba(0.3,0.2,0.39, 0.4)"
         color="white"
+        zIndex="1000"
+        px={4}
       >
-        <Flex align="center" mt="2" ml="5">
+        <Flex align="center" h="100%">
           <HStack spacing={4}>
             <Text fontSize="2xl" fontWeight="bold" color="green.400">
               <Icon as={FaCode} mr={2} /> Asim
@@ -165,129 +167,123 @@ const Navbar: React.FC = () => {
             onClick={onOpen}
           />
         </Flex>
-        <Container
-          maxW="container.xl"
-          mx="auto"
-          my={{ base: "100px", md: "80px" }}
-        >
-          <Drawer placement="right" onClose={onClose} isOpen={isOpen}>
-            <DrawerOverlay />
-            <DrawerContent
+        <Drawer placement="right" onClose={onClose} isOpen={isOpen}>
+          <DrawerOverlay />
+          <DrawerContent
+            sx={{
+              backdropFilter: "blur(5px)",
+              backgroundColor: "rgba(0, 0, 0, 0.2)",
+              color: "white",
+              borderRadius: "10px",
+            }}
+          >
+            <DrawerCloseButton
               sx={{
-                backdropFilter: "blur(5px)",
-                backgroundColor: "rgba(0, 0, 0, 0.2)",
-                color: "white",
-                borderRadius: "10px",
+                _hover: {
+                  color: "green.100",
+                },
+              }}
+            />
+            <DrawerHeader
+              sx={{
+                color: "green.400",
               }}
             >
-              <DrawerCloseButton
-                sx={{
-                  _hover: {
-                    color: "green.100",
-                  },
-                }}
-              />
-              <DrawerHeader
-                sx={{
-                  color: "green.400",
-                }}
-              >
-                Portfolio
-              </DrawerHeader>
-              <DrawerBody>
-                <VStack as="nav" spacing={4} alignItems="left">
-                  <ScrollLink
-                    to="home"
-                    smooth={true}
-                    duration={500}
-                    offset={-70}
-                    onClick={onClose}
+              Portfolio
+            </DrawerHeader>
+            <DrawerBody>
+              <VStack as="nav" spacing={4} alignItems="left">
+                <ScrollLink
+                  to="home"
+                  smooth={true}
+                  duration={500}
+                  offset={-70}
+                  onClick={onClose}
+                >
+                  <ChakraLink
+                    sx={{
+                      _hover: {
+                        color: "green.100",
+                      },
+                    }}
                   >
-                    <ChakraLink
-                      sx={{
-                        _hover: {
-                          color: "green.100",
-                        },
-                      }}
-                    >
-                      HOME
-                    </ChakraLink>
-                  </ScrollLink>
-                  <ScrollLink
-                    to="about"
-                    smooth={true}
-                    duration={500}
-                    offset={-70}
-                    onClick={onClose}
+                    HOME
+                  </ChakraLink>
+                </ScrollLink>
+                <ScrollLink
+                  to="about"
+                  smooth={true}
+                  duration={500}
+                  offset={-70}
+                  onClick={onClose}
+                >
+                  <ChakraLink
+                    sx={{
+                      _hover: {
+                        color: "green.100",
+                      },
+                    }}
                   >
-                    <ChakraLink
-                      sx={{
-                        _hover: {
-                          color: "green.100",
-                        },
-                      }}
-                    >
-                      ABOUT
-                    </ChakraLink>
-                  </ScrollLink>
-                  <ScrollLink
-                    to="resume"
-                    smooth={true}
-                    duration={500}
-                    offset={-70}
-                    onClick={onClose}
+                    ABOUT
+                  </ChakraLink>
+                </ScrollLink>
+                <ScrollLink
+                  to="resume"
+                  smooth={true}
+                  duration={500}
+                  offset={-70}
+                  onClick={onClose}
+                >
+                  <ChakraLink
+                    sx={{
+                      _hover: {
+                        color: "green.100",
+                      },
+                    }}
                   >
-                    <ChakraLink
-                      sx={{
-                        _hover: {
-                          color: "green.100",
-                        },
-                      }}
-                    >
-                      RESUME
-                    </ChakraLink>
-                  </ScrollLink>
-                  <ScrollLink
-                    to="portfolio"
-                    smooth={true}
-                    duration={500}
-                    offset={-70}
-                    onClick={onClose}
+                    RESUME
+                  </ChakraLink>
+                </ScrollLink>
+                <ScrollLink
+                  to="portfolio"
+                  smooth={true}
+                  duration={500}
+                  offset={-70}
+                  onClick={onClose}
+                >
+                  <ChakraLink
+                    sx={{
+                      _hover: {
+                        color: "green.100",
+                      },
+                    }}
                   >
-                    <ChakraLink
-                      sx={{
-                        _hover: {
-                          color: "green.100",
-                        },
-                      }}
-                    >
-                      PORTFOLIO
-                    </ChakraLink>
-                  </ScrollLink>
+                    PORTFOLIO
+                  </ChakraLink>
+                </ScrollLink>
 
-                  <ScrollLink
-                    to="contact"
-                    smooth={true}
-                    duration={500}
-                    offset={-70}
-                    onClick={onClose}
+                <ScrollLink
+                  to="contact"
+                  smooth={true}
+                  duration={500}
+                  offset={-70}
+                  onClick={onClose}
+                >
+                  <ChakraLink
+                    sx={{
+                      _hover: {
+                        color: "green.100",
+                      },
+                    }}
                   >
-                    <ChakraLink
-                      sx={{
-                        _hover: {
-                          color: "green.100",
-                        },
-                      }}
-                    >
-                      CONTACT
-                    </ChakraLink>
-                  </ScrollLink>
-                </VStack>
-              </DrawerBody>
-            </DrawerContent>
-          </Drawer>
-        </Container>
-      </Box>
+                    CONTACT
+                  </ChakraLink>
+                </ScrollLink>
+              </VStack>
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
+      </Container>
     </motion.div>
   );
 };

@@ -62,9 +62,9 @@ export default function AboutMe() {
       transition={{ duration: 0.7 }}
     >
       <Container
-        maxW="container.xl"
+        maxW="100%"
         mx="auto"
-        id="contact"
+        id="about"
         my={{ base: "100px", md: "80px" }}
       >
         <Heading
@@ -85,8 +85,8 @@ export default function AboutMe() {
           <GridItem>
             <motion.div
               ref={ref}
-              initial={{ opacity: 0, x: -100 }}
-              animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : -100 }}
+              initial={{ opacity: 0, y: -100 }}
+              animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : -100 }}
               transition={{ duration: 0.7, delay: 0.3 }}
             >
               <Box
@@ -157,10 +157,10 @@ export default function AboutMe() {
                 </VStack>
                 <motion.div
                   ref={ref}
-                  initial={{ opacity: 0, x: 100 }}
+                  initial={{ opacity: 0, y: 100 }}
                   animate={{
                     opacity: isInView ? 1 : 0,
-                    x: isInView ? 0 : 100,
+                    y: isInView ? 0 : 100,
                   }}
                   transition={{ duration: 0.7 }}
                 >

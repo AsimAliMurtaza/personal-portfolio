@@ -8,7 +8,8 @@ import { Box } from "@chakra-ui/react";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/Page-Header";
 import PageFooter from "@/components/ui/Page-Footer";
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/react";
+import { Container } from "@chakra-ui/react";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -41,9 +42,8 @@ export default function RootLayout({
         >
           <Providers>
             <Navbar />
-            <Box pt="80px">{children}
-            <Analytics />
-            </Box>
+              {children}
+              <Analytics />
             <PageFooter />
           </Providers>
         </ThemeProvider>

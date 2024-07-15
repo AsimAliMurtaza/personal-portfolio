@@ -84,14 +84,14 @@ export default function ContactMe() {
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (error) {
       console.error("Error sending message:", error);
-    toast({
-      title: "Error.",
-      description:
-        "Sending messages have been disabled. Please try again later",
-      status: "error",
-      duration: 5000,
-      isClosable: true,
-    });
+      toast({
+        title: "Error.",
+        description:
+          "Sending messages have been disabled. Please try again later",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 
@@ -103,7 +103,7 @@ export default function ContactMe() {
       transition={{ duration: 0.7 }}
     >
       <Container
-        maxW="container.xl"
+        maxW="100%"
         mx="auto"
         id="contact"
         my={{ base: "100px", md: "80px" }}
@@ -183,8 +183,8 @@ export default function ContactMe() {
           <GridItem>
             <motion.div
               ref={ref}
-              initial={{ opacity: 0, x: 100 }}
-              animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : 100 }}
+              initial={{ opacity: 0, y: 100 }}
+              animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
               transition={{ duration: 1, delay: 0.8 }}
             >
               <Box>

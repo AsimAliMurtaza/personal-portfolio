@@ -56,7 +56,7 @@ const Services = () => {
       transition={{ duration: 0.7 }}
     >
       <Container
-        maxW="container.xl"
+        maxW="100%"
         mx="auto"
         display="flex"
         flexDirection="column"
@@ -68,8 +68,8 @@ const Services = () => {
         </Heading>
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, x: -100, y: 100 }}
-          animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : -100, y: isInView ? 0 : 100 }}
+          initial={{ opacity: 0,  y: 100 }}
+          animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
           transition={{ duration: 0.7, delay: 0.5 }}
         >
           <Grid

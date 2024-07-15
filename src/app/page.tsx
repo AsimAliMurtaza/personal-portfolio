@@ -1,5 +1,4 @@
-'use client';
-import { useState, useEffect } from "react";
+"use client";
 import AboutMe from "@/components/sections/AboutMe";
 import ContactMe from "@/components/sections/ContactMe";
 import Home from "@/components/sections/Home";
@@ -9,7 +8,6 @@ import Services from "@/components/sections/Services";
 import Skills from "@/components/sections/Skills";
 
 export default function App() {
-
   return (
     <div>
       <Home />

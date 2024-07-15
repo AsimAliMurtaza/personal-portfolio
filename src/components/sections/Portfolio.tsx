@@ -61,12 +61,12 @@ export default function Portfolio() {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, x: 100 }}
-      animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : 100 }}
+      initial={{ opacity: 0, y: 100 }}
+      animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
       transition={{ duration: 0.7 }}
     >
       <Container
-        maxW="container.xl"
+        maxW="100%"
         mx="auto"
         id="portfolio"
         my={{ base: "100px", md: "80px" }}
@@ -92,8 +92,8 @@ export default function Portfolio() {
             <motion.div
               key={project.id}
               ref={ref}
-              initial={{ opacity: 0, x: -100 }}
-              animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : -100 }}
+              initial={{ opacity: 0, y: 100 }}
+              animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
               transition={{ duration: 0.7, delay: 0.8 }}
             >
               <motion.div
