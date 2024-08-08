@@ -112,6 +112,8 @@ export default function Portfolio() {
                     alignItems="center"
                     border="0"
                   >
+                  
+
                     <Image
                       src={project.image}
                       alt={project.title}

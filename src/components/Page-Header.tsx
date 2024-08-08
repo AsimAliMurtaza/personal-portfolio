@@ -29,15 +29,7 @@ const Navbar: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <motion.div
-      initial={{ y: -250 }}
-      animate={{ y: 0 }}
-      transition={{
-        type: "spring",
-        stiffness: 260,
-        damping: 20,
-      }}
-    >
+
       <Container
         as="nav"
         maxW="100%"
@@ -284,7 +276,6 @@ const Navbar: React.FC = () => {
           </DrawerContent>
         </Drawer>
       </Container>
-    </motion.div>
   );
 };
 
