@@ -27,18 +27,16 @@ interface AboutMeData extends DocumentData {
   from: string;
   language: string;
   freelance: string;
+  resume: string;
 }
-
-const onClickHandler = () => {
-  window.open(
-    "https://drive.google.com/file/d/1hfAwa3--ywJgBOLiyqoXKMZRx_dwnJOW/view?usp=sharing"
-  );
-};
 
 export default function AboutMe() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { rootMargin: "-200px" });
 
+  const onClickHandler = () => {
+    window.open(`${aboutMeData?.resume}`);
+  };
   const [aboutMeData, setAboutMeData] = useState<AboutMeData | null>(null);
 
   useEffect(() => {

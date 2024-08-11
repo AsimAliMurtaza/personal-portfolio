@@ -10,6 +10,7 @@ import {
   Link,
   Text,
   Box,
+  Button,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useRef } from "react";
@@ -24,6 +25,7 @@ interface Project {
   description: string;
   image: string;
   githubLink: string;
+  liveLink?: string;
 }
 
 export default function Portfolio() {
@@ -46,7 +48,9 @@ export default function Portfolio() {
             description: data.description,
             image: data.image,
             githubLink: data.githubLink,
+            liveLink: data.liveLink,
           });
+          console.log("Fetched projects:", fetchedProjects);
         });
 
         setProjects(fetchedProjects);
@@ -112,8 +116,6 @@ export default function Portfolio() {
                     alignItems="center"
                     border="0"
                   >
-                  
-
                     <Image
                       src={project.image}
                       alt={project.title}
@@ -136,11 +138,13 @@ export default function Portfolio() {
                   <Text fontWeight="thin" textAlign="center" color="white">
                     {project.description}
                   </Text>
-                  <Text
+                  <Button
                     textAlign="center"
-                    color="green.100"
+                    display="flex"
+                    mx="auto"
+                    colorScheme="green"
                     mt={5}
-                    fontWeight="bold"
+                    variant="ghost"
                   >
                     <Link
                       href={project.githubLink}
@@ -154,7 +158,32 @@ export default function Portfolio() {
                     >
                       View on Github
                     </Link>
-                  </Text>
+                  </Button>
+                  {project.liveLink && (
+                    <Button
+                      textAlign="center"
+                      display="flex"
+                      mx="auto"
+                      colorScheme="green"
+                      mt={5}
+                      variant="ghost"
+                    >
+                      <Text as="span" mx={2}>
+                        <Link
+                          href={project.liveLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          sx={{
+                            _hover: {
+                              color: "green.400",
+                            },
+                          }}
+                        >
+                          View live Demo
+                        </Link>
+                      </Text>
+                    </Button>
+                  )}
                 </GridItem>
               </motion.div>
             </motion.div>
