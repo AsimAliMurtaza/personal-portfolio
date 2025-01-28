@@ -23,7 +23,7 @@ interface HomeData extends DocumentData {
 export default function Home() {
   const [homeData, setHomeData] = useState<HomeData | null>(null);
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { rootMargin: "-200px" });
+  const isInView = useInView(ref, { rootMargin: "-100px" });
 
   useEffect(() => {
     const getData = async () => {
@@ -122,7 +122,7 @@ export default function Home() {
                     color: "green.100",
                   },
                 }}
-                href="https://twitter.com/heyits_asim"
+                href="https://x.com/heyits_asim"
                 target="_blank"
                 rel="noopener noreferrer"
               >

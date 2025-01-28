@@ -1,7 +1,5 @@
 "use client";
 import {
-  Card,
-  CardBody,
   Container,
   Grid,
   GridItem,
@@ -29,7 +27,7 @@ interface Project {
 
 export default function Portfolio() {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { rootMargin: "-200px" });
+  const isInView = useInView(ref, { rootMargin: "-100px" });
   const [projects, setProjects] = useState<Project[]>([]);
 
   useEffect(() => {

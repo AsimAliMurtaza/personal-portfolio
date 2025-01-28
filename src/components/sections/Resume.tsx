@@ -33,7 +33,7 @@ interface Experience {
 
 export default function Resume() {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { rootMargin: "-200px" });
+  const isInView = useInView(ref, { rootMargin: "-100px" });
   const [education, setEducation] = useState<Education[]>([]);
   const [experience, setExperience] = useState<Experience[]>([]);
 

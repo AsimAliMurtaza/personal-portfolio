@@ -34,7 +34,7 @@ interface Skill {
 
 export default function Skills() {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { rootMargin: "-200px" });
+  const isInView = useInView(ref, { rootMargin: "-100px" });
 
   const [skills, setSkills] = useState<Skill[]>([]);
 

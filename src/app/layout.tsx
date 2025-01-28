@@ -3,13 +3,11 @@ import "@/styles/globals.css";
 import { Inter as FontSans } from "next/font/google";
 import { Providers } from "./providers";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Box } from "@chakra-ui/react";
 
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/Page-Header";
 import PageFooter from "@/components/ui/Page-Footer";
 import { Analytics } from "@vercel/analytics/react";
-import { Container } from "@chakra-ui/react";
 
 const fontSans = FontSans({
   subsets: ["latin"],

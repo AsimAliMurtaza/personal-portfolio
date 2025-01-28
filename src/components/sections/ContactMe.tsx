@@ -33,7 +33,7 @@ interface ContactData extends DocumentData {
 
 export default function ContactMe() {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { rootMargin: "-200px" });
+  const isInView = useInView(ref, { rootMargin: "-100px" });
 
   const [contactData, setContactData] = useState<ContactData | null>(null);
   const [formData, setFormData] = useState({
@@ -50,7 +50,7 @@ export default function ContactMe() {
       try {
         const data = await fetchContactData();
         console.log("Fetched data:", data);
-        setContactData(data as ContactData); // Asserting data type to ContactData
+        setContactData(data as ContactData); 
       } catch (error) {
         console.error("Error fetching data:", error);
       }
