@@ -11,6 +11,7 @@ import {
   VStack,
   HStack,
   Button,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { useRef, useState, useEffect } from "react";
 import useInView from "@/lib/useInView";
@@ -52,6 +53,13 @@ export default function AboutMe() {
     getData();
   }, []);
 
+  const headingColor = useColorModeValue("green.500", "green.400");
+  const textColor = useColorModeValue("gray.800", "white");
+  const subTextColor = useColorModeValue("gray.600", "gray.300");
+  const labelColor = useColorModeValue("green.600", "green.200");
+  const buttonColorScheme = useColorModeValue("teal", "green");
+  const bgColor = useColorModeValue("white", "gray.900");
+
   return (
     <motion.div
       ref={ref}
@@ -65,13 +73,14 @@ export default function AboutMe() {
         id="about"
         my={{ base: "50px", md: "80px" }}
         px={{ base: "20px", md: "40px" }}
+        bg={bgColor} // Dynamically change background color
       >
         <Heading
           as="h2"
           textAlign="center"
           mb={{ base: 6, md: 10 }}
           fontWeight="thin"
-          color="green.400"
+          color={headingColor}
           fontSize={{ base: "2xl", md: "3xl" }}
         >
           ABOUT ME
@@ -116,7 +125,7 @@ export default function AboutMe() {
             >
               <Box>
                 <Text
-                  color="white"
+                  color={textColor}
                   textAlign={{ base: "center", md: "left" }}
                   mb={{ base: 4, md: 5 }}
                   fontSize={{ base: "sm", md: "md" }}
@@ -126,61 +135,61 @@ export default function AboutMe() {
                 <VStack align={{ base: "center", md: "start" }} spacing={2}>
                   <HStack>
                     <Text
-                      color="green.100"
+                      color={labelColor}
                       fontWeight="bold"
                       fontSize={{ base: "sm", md: "md" }}
                     >
                       Phone:
                     </Text>
-                    <Text color="white" fontSize={{ base: "sm", md: "md" }}>
+                    <Text color={textColor} fontSize={{ base: "sm", md: "md" }}>
                       {aboutMeData?.phone}
                     </Text>
                   </HStack>
                   <HStack>
                     <Text
-                      color="green.100"
+                      color={labelColor}
                       fontWeight="bold"
                       fontSize={{ base: "sm", md: "md" }}
                     >
                       Email:
                     </Text>
-                    <Text color="white" fontSize={{ base: "sm", md: "md" }}>
+                    <Text color={textColor} fontSize={{ base: "sm", md: "md" }}>
                       {aboutMeData?.email}
                     </Text>
                   </HStack>
                   <HStack>
                     <Text
-                      color="green.100"
+                      color={labelColor}
                       fontWeight="bold"
                       fontSize={{ base: "sm", md: "md" }}
                     >
                       From:
                     </Text>
-                    <Text color="white" fontSize={{ base: "sm", md: "md" }}>
+                    <Text color={textColor} fontSize={{ base: "sm", md: "md" }}>
                       {aboutMeData?.from}
                     </Text>
                   </HStack>
                   <HStack>
                     <Text
-                      color="green.100"
+                      color={labelColor}
                       fontWeight="bold"
                       fontSize={{ base: "sm", md: "md" }}
                     >
                       Language:
                     </Text>
-                    <Text color="white" fontSize={{ base: "sm", md: "md" }}>
+                    <Text color={textColor} fontSize={{ base: "sm", md: "md" }}>
                       {aboutMeData?.language}
                     </Text>
                   </HStack>
                   <HStack>
                     <Text
-                      color="green.100"
+                      color={labelColor}
                       fontWeight="bold"
                       fontSize={{ base: "sm", md: "md" }}
                     >
                       Freelance:
                     </Text>
-                    <Text color="white" fontSize={{ base: "sm", md: "md" }}>
+                    <Text color={textColor} fontSize={{ base: "sm", md: "md" }}>
                       {aboutMeData?.freelance}
                     </Text>
                   </HStack>
@@ -196,7 +205,7 @@ export default function AboutMe() {
                   }}
                 >
                   <Button
-                    colorScheme="green"
+                    colorScheme={buttonColorScheme}
                     mt={{ base: 4, md: 5 }}
                     size={{ base: "sm", md: "md" }}
                     onClick={onClickHandler}

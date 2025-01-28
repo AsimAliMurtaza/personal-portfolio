@@ -9,6 +9,7 @@ import {
   VStack,
   Progress,
   Icon,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import useInView from "@/lib/useInView";
@@ -37,6 +38,13 @@ export default function Skills() {
   const isInView = useInView(ref, { rootMargin: "-100px" });
 
   const [skills, setSkills] = useState<Skill[]>([]);
+
+  const headingColor = useColorModeValue("green.400", "green.300");
+  const textColor = useColorModeValue("gray.700", "gray.300");
+  const progressColorScheme = useColorModeValue("green", "green");
+  const iconColor = useColorModeValue("green.500", "green.300");
+  const bgColor = useColorModeValue("white", "gray.900");
+  const bgProgColor = useColorModeValue("gray.100", "gray.700");
 
   useEffect(() => {
     const fetchSkills = async () => {
@@ -70,13 +78,17 @@ export default function Skills() {
       transition={{ duration: 0.7 }}
     >
       <Container
+        bg={bgColor}
         maxW="100%"
         mx="auto"
         my={{ base: "100px", md: "80px" }}
+        borderRadius="lg"
+        p={8}
+        shadow="md"
       >
         <Heading
           as="h2"
-          color={"green.400"}
+          color={headingColor}
           size="lg"
           mb={10}
           textAlign="center"
@@ -92,7 +104,7 @@ export default function Skills() {
         >
           <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={10}>
             <GridItem>
-              <Text fontSize="xl" fontWeight="bold" mb={4} color={"green.100"}>
+              <Text fontSize="xl" fontWeight="bold" mb={4} color={textColor}>
                 All the skills that I have in the field of work are mentioned.
               </Text>
               <motion.div
@@ -109,42 +121,42 @@ export default function Skills() {
                   <GridItem>
                     <VStack spacing={4} align="center">
                       <Box>
-                        <Icon as={FaNodeJs} boxSize={32} color="green.100" />
+                        <Icon as={FaNodeJs} boxSize={32} color={iconColor} />
                       </Box>
                     </VStack>
                   </GridItem>
                   <GridItem>
                     <VStack spacing={4} align="center">
                       <Box>
-                        <Icon as={FaReact} boxSize={32} color="green.100" />
+                        <Icon as={FaReact} boxSize={32} color={iconColor} />
                       </Box>
                     </VStack>
                   </GridItem>
                   <GridItem>
                     <VStack spacing={4} align="center">
                       <Box>
-                        <Icon as={FaPython} boxSize={32} color="green.100" />
+                        <Icon as={FaPython} boxSize={32} color={iconColor} />
                       </Box>
                     </VStack>
                   </GridItem>
                   <GridItem>
                     <VStack spacing={4} align="center">
                       <Box>
-                        <Icon as={FaHtml5} boxSize={32} color="green.100" />
+                        <Icon as={FaHtml5} boxSize={32} color={iconColor} />
                       </Box>
                     </VStack>
                   </GridItem>
                   <GridItem>
                     <VStack spacing={4} align="center">
                       <Box>
-                        <Icon as={FaCss3} boxSize={32} color="green.100" />
+                        <Icon as={FaCss3} boxSize={32} color={iconColor} />
                       </Box>
                     </VStack>
                   </GridItem>
                   <GridItem>
                     <VStack spacing={4} align="center">
                       <Box>
-                        <Icon as={FaGit} boxSize={32} color="green.100" />
+                        <Icon as={FaGit} boxSize={32} color={iconColor} />
                       </Box>
                     </VStack>
                   </GridItem>
@@ -154,10 +166,16 @@ export default function Skills() {
             <GridItem>
               <VStack spacing={6} align="start">
                 {skills.map((skill) => (
-                  <Box key={skill.id} width="100%">
-                    <Text color="green.100">{skill.skill}</Text>
+                  <Box
+                    key={skill.id}
+                    width="100%"
+                    bg={bgProgColor}
+                    borderRadius="md"
+                    p={4}
+                  >
+                    <Text color={textColor}>{skill.skill}</Text>
                     <Progress
-                      colorScheme="green"
+                      colorScheme={progressColorScheme}
                       size="sm"
                       value={skill.value}
                     />

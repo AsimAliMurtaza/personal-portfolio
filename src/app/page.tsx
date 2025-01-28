@@ -6,17 +6,19 @@ import Portfolio from "@/components/sections/Portfolio";
 import Resume from "@/components/sections/Resume";
 import Services from "@/components/sections/Services";
 import Skills from "@/components/sections/Skills";
+import { Container, useColorModeValue } from "@chakra-ui/react";
 
 export default function App() {
+  const bgColor = useColorModeValue("white", "gray.900");
   return (
-    <div>
-      <Home />
-      <AboutMe />
-      <Services />
-      <Skills />
-      <Resume />
-      <Portfolio />
-      <ContactMe />
-    </div>
+      <Container maxW="container.xl" bg={bgColor}>
+        <Home />
+        <AboutMe />
+        <Services />
+        <Skills />
+        <Resume />
+        <Portfolio />
+        <ContactMe />
+      </Container>
   );
 }

@@ -9,6 +9,7 @@ import {
   Text,
   Box,
   Button,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
@@ -29,6 +30,12 @@ export default function Portfolio() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { rootMargin: "-100px" });
   const [projects, setProjects] = useState<Project[]>([]);
+
+  // Define colors for light and dark modes
+  const headingColor = useColorModeValue("green.500", "green.300");
+  const textColor = useColorModeValue("gray.800", "gray.300");
+  const bgColor = useColorModeValue("white", "gray.900");
+  const buttonColor = useColorModeValue("green.600", "green.400");
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -70,10 +77,14 @@ export default function Portfolio() {
         mx="auto"
         id="portfolio"
         my={{ base: "100px", md: "80px" }}
+        bg={bgColor}
+        borderRadius="lg"
+        p={8}
+        shadow="md"
       >
         <Heading
           as="h2"
-          color="green.400"
+          color={headingColor}
           mb={10}
           textAlign="center"
           fontWeight="thin"
@@ -124,14 +135,14 @@ export default function Portfolio() {
                   <Heading
                     as="h3"
                     size="xl"
-                    color="green.100"
+                    color={headingColor}
                     mb={3}
                     textAlign="center"
                     fontWeight="thin"
                   >
                     {project.title}
                   </Heading>
-                  <Text fontWeight="thin" textAlign="center" color="white">
+                  <Text fontWeight="thin" textAlign="center" color={textColor}>
                     {project.description}
                   </Text>
                   <Box textAlign="center" mt={5}>
@@ -140,7 +151,7 @@ export default function Portfolio() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <Button colorScheme="green" variant="ghost">
+                      <Button colorScheme="green" variant="ghost" color={buttonColor}>
                         View on GitHub
                       </Button>
                     </Link>
@@ -152,7 +163,7 @@ export default function Portfolio() {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <Button colorScheme="green" variant="ghost">
+                        <Button colorScheme="green" variant="ghost" color={buttonColor}>
                           View Live Demo
                         </Button>
                       </Link>

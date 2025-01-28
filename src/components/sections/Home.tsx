@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Box,
   Container,
@@ -7,6 +8,7 @@ import {
   Text,
   Link as ChakraLink,
   Icon,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { FaFacebook, FaGithub, FaTwitter } from "react-icons/fa";
 import { motion } from "framer-motion";
@@ -24,6 +26,11 @@ export default function Home() {
   const [homeData, setHomeData] = useState<HomeData | null>(null);
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { rootMargin: "-100px" });
+
+  const bgColor = useColorModeValue("white", "gray.900");
+  const textColor = useColorModeValue("gray.800", "white");
+  const headingColor = useColorModeValue("teal.600", "green.100");
+  const linkHoverColor = useColorModeValue("teal.600", "green.100");
 
   useEffect(() => {
     const getData = async () => {
@@ -49,14 +56,15 @@ export default function Home() {
       }}
     >
       <Box
-        backgroundSize="cover"
+        bg={bgColor} // Dynamically change background color
         maxW="100%"
         display="flex"
         mt={20}
         flexDirection="column"
         justifyContent="center"
         alignItems="center"
-        color="white"
+        color={textColor} // Dynamically change text color
+        minH="100vh"
       >
         <motion.div
           ref={ref}
@@ -90,7 +98,7 @@ export default function Home() {
               Hi, I am
             </Heading>
 
-            <Heading as="h2" size="2xl" color="green.100">
+            <Heading as="h2" size="2xl" color={headingColor}>
               Muhammad Asim Ali Murtaza
             </Heading>
           </motion.div>
@@ -119,7 +127,7 @@ export default function Home() {
               <ChakraLink
                 sx={{
                   _hover: {
-                    color: "green.100",
+                    color: linkHoverColor,
                   },
                 }}
                 href="https://x.com/heyits_asim"
@@ -131,7 +139,7 @@ export default function Home() {
               <ChakraLink
                 sx={{
                   _hover: {
-                    color: "green.100",
+                    color: linkHoverColor,
                   },
                 }}
                 href="https://facebook.com/asim90209"
@@ -143,7 +151,7 @@ export default function Home() {
               <ChakraLink
                 sx={{
                   _hover: {
-                    color: "green.100",
+                    color: linkHoverColor,
                   },
                 }}
                 href="https://github.com/AsimAliMurtaza"

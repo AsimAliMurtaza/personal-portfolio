@@ -12,6 +12,7 @@ import {
   Textarea,
   Button,
   useToast,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { FaEnvelope, FaPhone, FaMapMarkerAlt } from "react-icons/fa";
 import { useRef } from "react";
@@ -23,7 +24,6 @@ import emailjs from "emailjs-com";
 import { fetchContactData } from "@/lib/firebase";
 import { DocumentData } from "firebase/firestore";
 
-// Define interfaces for data
 interface ContactData extends DocumentData {
   description: string;
   email: string;
@@ -45,12 +45,16 @@ export default function ContactMe() {
 
   const toast = useToast();
 
+  const inputBorderColor = useColorModeValue("green.400", "green.100");
+  const headingColor = useColorModeValue("green.500", "green.200");
+  const textColor = useColorModeValue("gray.800", "gray.200");
+  const bgColor = useColorModeValue("white", "gray.900");
+
   useEffect(() => {
     const getData = async () => {
       try {
         const data = await fetchContactData();
-        console.log("Fetched data:", data);
-        setContactData(data as ContactData); 
+        setContactData(data as ContactData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -107,11 +111,15 @@ export default function ContactMe() {
         mx="auto"
         id="contact"
         my={{ base: "100px", md: "80px" }}
+        bg={bgColor}
+        p={8}
+        rounded="lg"
+        shadow="md"
       >
         <Heading
           as="h2"
           size="xl"
-          color="green.400"
+          color={headingColor}
           textAlign="center"
           mb={10}
           fontWeight="thin"
@@ -120,103 +128,89 @@ export default function ContactMe() {
         </Heading>
         <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={10}>
           <GridItem>
-            <motion.div
-              ref={ref}
-              initial={{ opacity: 0, y: 100 }}
-              animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
-              transition={{ duration: 1, delay: 0.5 }}
-            >
-              <Box>
-                <Heading as="h2" size="lg" color="green.100" mb={5}>
-                  Just say Hello
-                </Heading>
-                <form onSubmit={handleSubmit}>
-                  <VStack spacing={5} align="start">
-                    <Input
-                      name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      placeholder="Your Name"
-                      variant="outline"
-                      focusBorderColor="green.100"
-                      color="white"
-                    />
-                    <Input
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      placeholder="Your Email"
-                      variant="outline"
-                      focusBorderColor="green.100"
-                      color="white"
-                    />
-                    <Input
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleInputChange}
-                      placeholder="Your Subject"
-                      variant="outline"
-                      focusBorderColor="green.100"
-                      color="white"
-                    />
-                    <Textarea
-                      name="message"
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      placeholder="Your Message"
-                      variant="outline"
-                      focusBorderColor="green.100"
-                      color="white"
-                    />
-                    <Button
-                      type="submit"
-                      colorScheme="green"
-                      alignSelf="flex-start"
-                    >
-                      Send Message
-                    </Button>
-                  </VStack>
-                </form>
-              </Box>
-            </motion.div>
+            <Box>
+              <Heading as="h2" size="lg" color={headingColor} mb={5}>
+                Just say Hello
+              </Heading>
+              <form onSubmit={handleSubmit}>
+                <VStack spacing={5} align="start">
+                  <Input
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    placeholder="Your Name"
+                    variant="outline"
+                    focusBorderColor={inputBorderColor}
+                    color={textColor}
+                  />
+                  <Input
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder="Your Email"
+                    variant="outline"
+                    focusBorderColor={inputBorderColor}
+                    color={textColor}
+                  />
+                  <Input
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleInputChange}
+                    placeholder="Your Subject"
+                    variant="outline"
+                    focusBorderColor={inputBorderColor}
+                    color={textColor}
+                  />
+                  <Textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    placeholder="Your Message"
+                    variant="outline"
+                    focusBorderColor={inputBorderColor}
+                    color={textColor}
+                  />
+                  <Button
+                    type="submit"
+                    colorScheme="green"
+                    alignSelf="flex-start"
+                  >
+                    Send Message
+                  </Button>
+                </VStack>
+              </form>
+            </Box>
           </GridItem>
           <GridItem>
-            <motion.div
-              ref={ref}
-              initial={{ opacity: 0, y: 100 }}
-              animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
-              transition={{ duration: 1, delay: 0.8 }}
-            >
-              <Box>
-                <Heading as="h2" size="lg" color="green.100" mb={5}>
-                  Contact Info
-                </Heading>
-                <VStack align="start" spacing={5} color="white">
-                  <Text>{contactData?.description}</Text>
-                  <HStack spacing={4}>
-                    <FaEnvelope />
-                    <VStack align="start" spacing={1}>
-                      <Text color="green.100">Email</Text>
-                      <Text>{contactData?.email}</Text>
-                    </VStack>
-                  </HStack>
-                  <HStack spacing={4}>
-                    <FaPhone />
-                    <VStack align="start" spacing={1}>
-                      <Text color="green.100">Phone</Text>
-                      <Text>{contactData?.phone}</Text>
-                    </VStack>
-                  </HStack>
-                  <HStack spacing={4}>
-                    <FaMapMarkerAlt />
-                    <VStack align="start" spacing={1}>
-                      <Text color="green.100">Address</Text>
-                      <Text>{contactData?.address}</Text>
-                    </VStack>
-                  </HStack>
-                </VStack>
-              </Box>
-            </motion.div>
+            <Box>
+              <Heading as="h2" size="lg" color={headingColor} mb={5}>
+                Contact Info
+              </Heading>
+              <VStack align="start" spacing={5} color={textColor}>
+                <Text>{contactData?.description}</Text>
+                <HStack spacing={4}>
+                  <FaEnvelope />
+                  <VStack align="start" spacing={1}>
+                    <Text color={headingColor}>Email</Text>
+                    <Text>{contactData?.email}</Text>
+                  </VStack>
+                </HStack>
+                <HStack spacing={4}>
+                  <FaPhone />
+                  <VStack align="start" spacing={1}>
+                    <Text color={headingColor}>Phone</Text>
+                    <Text>{contactData?.phone}</Text>
+                  </VStack>
+                </HStack>
+                <HStack spacing={4}>
+                  <FaMapMarkerAlt />
+                  <VStack align="start" spacing={1}>
+                    <Text color={headingColor}>Address</Text>
+                    <Text>{contactData?.address}</Text>
+                  </VStack>
+                </HStack>
+              </VStack>
+            </Box>
           </GridItem>
         </Grid>
       </Container>

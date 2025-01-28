@@ -1,16 +1,18 @@
-'use client';
-import { Container, Text } from "@chakra-ui/react";
+"use client";
+import { Container, Text, useColorModeValue } from "@chakra-ui/react";
 
 export default function PageFooter() {
-  return (
+  const bgColor = useColorModeValue("white", "gray.900");
+  const textColor = useColorModeValue("gray.900", "white");
 
-      <Container maxW="100%" mt={20} mb={10} textAlign="center">
-        <footer>
-          <Text color="white" textAlign="center" mt={5} fontWeight={"thin"}>
-            &copy; {new Date().getFullYear()} Designed & Developed by Asim Ali
-            Murtaza
-          </Text>
-        </footer>
-      </Container>
+  return (
+    <Container bg={bgColor} maxW="100%" mt={20} mb={10} textAlign="center" py={5}>
+      <footer>
+        <Text color={textColor} textAlign="center" fontWeight="thin">
+          &copy; {new Date().getFullYear()} Designed & Developed by Asim Ali
+          Murtaza
+        </Text>
+      </footer>
+    </Container>
   );
 }
