@@ -58,7 +58,6 @@ export default function AboutMe() {
     getData();
   }, []);
 
-  // Theme-based colors
   const headingColor = useColorModeValue("teal.300", "green.200");
   const textColor = useColorModeValue("gray.800", "gray.200");
   const cardBgColor = useColorModeValue("whiteAlpha.600", "whiteAlpha.100");
