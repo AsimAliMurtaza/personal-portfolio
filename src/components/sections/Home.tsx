@@ -10,6 +10,8 @@ import {
   useColorModeValue,
   Link,
   VStack,
+  Skeleton,
+  SkeletonText,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
@@ -28,6 +30,7 @@ interface HomeData {
 
 export default function HeroSection() {
   const [homeData, setHomeData] = useState<HomeData | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getData = async () => {
@@ -36,6 +39,8 @@ export default function HeroSection() {
         setHomeData(data as HomeData);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
       }
     };
     getData();
@@ -64,124 +69,142 @@ export default function HeroSection() {
       {/* Left Content */}
       <MotionBox
         maxW={{ base: "100%", md: "650px" }}
-        initial={{ opacity: 0, x: -50 }}
+        initial={{ opacity: 0, x: 0 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        transition={{ duration: 2, ease: "easeOut" }}
       >
         <MotionHeading
           as="h1"
-          size={{ base: "2xl", md: "3xl" }} // Responsive font size
+          size={{ base: "2xl", md: "3xl" }}
           mb={4}
           bgClip="text"
           bgGradient={gradientText}
           fontWeight="bold"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 2 }}
         >
           Hi, I am Asim Ali Murtaza
         </MotionHeading>
 
         <MotionText
-          fontSize={{ base: "xl", md: "2xl" }} // Responsive font size
+          fontSize={{ base: "xl", md: "2xl" }}
           fontWeight="bold"
           color={textColor}
           mb={4}
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.2 }}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 2, delay: 0.2 }}
         >
           A Passionate Developer
         </MotionText>
 
-        <MotionText
-          fontSize={{ base: "md", md: "lg" }} // Responsive font size
+        {/* Description with Skeleton Loader */}
+        <MotionBox
+          fontSize={{ base: "md", md: "lg" }}
           mb={8}
           color="gray.500"
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, x: 0 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.4 }}
+          transition={{ duration: 2 }}
         >
-          {homeData?.description || ""}
-        </MotionText>
+          {loading ? (
+            <SkeletonText
+              noOfLines={4} // 4 lines of skeleton loader
+              spacing="4" // Space between each line
+              skeletonHeight="16px" // Height of each line
+              fadeDuration={0.8} // Smooth fade effect
+              startColor="gray.700" // Darker gray for shimmer effect
+              endColor="gray.500" // Lighter gray as it moves
+            />
+          ) : (
+            homeData?.description || ""
+          )}
+        </MotionBox>
 
         {/* Action Buttons */}
         <VStack spacing={4} align={{ base: "center", md: "flex-start" }}>
           <HStack spacing={4}>
             {/* Social Media Links */}
-            <Link href="https://github.com/AsimAliMurtaza" target="_blank">
-              <MotionBox
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                borderRadius="full"
-                borderWidth="1px"
-                borderColor={borderColor}
-                color={textColor}
-                _hover={{ bg: buttonHoverColor, color: "white" }}
-                p={2}
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <FaGithub />
-              </MotionBox>
-            </Link>
-            <Link href="https://linkedin.com/in/AsimAliMurtaza" target="_blank">
-              <MotionBox
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                borderRadius="full"
-                borderWidth="1px"
-                borderColor={borderColor}
-                color={textColor}
-                _hover={{ bg: buttonHoverColor, color: "white" }}
-                p={2}
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <FaLinkedin />
-              </MotionBox>
-            </Link>
-            <Link href="https://x.com/heyits_asim" target="_blank">
-              <MotionBox
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                borderRadius="full"
-                borderWidth="1px"
-                borderColor={borderColor}
-                color={textColor}
-                _hover={{ bg: buttonHoverColor, color: "white" }}
-                p={2}
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <FaTwitter />
-              </MotionBox>
-            </Link>
+            {[
+              { href: "https://github.com/AsimAliMurtaza", icon: FaGithub },
+              {
+                href: "https://linkedin.com/in/AsimAliMurtaza",
+                icon: FaLinkedin,
+              },
+              { href: "https://x.com/heyits_asim", icon: FaTwitter },
+            ].map((item, index) => (
+              <Link key={index} href={item.href} target="_blank">
+                <MotionBox
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  borderRadius="full"
+                  borderWidth="1px"
+                  borderColor={borderColor}
+                  color={textColor}
+                  _hover={{ bg: buttonHoverColor, color: "white" }}
+                  p={2}
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <item.icon size={20} />
+                </MotionBox>
+              </Link>
+            ))}
           </HStack>
         </VStack>
       </MotionBox>
 
-      {/* Right Image */}
+      {/* Right Image with Smooth Loading */}
       <MotionBox
         mt={{ base: 10, md: 0 }}
-        borderRadius="100%"
+        borderRadius="full"
         maxH={{ base: "250px", md: "350px" }}
         maxW={{ base: "250px", md: "350px" }}
         overflow="hidden"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, delay: 0.5 }}
+        transition={{ duration: 0.8, delay: 0.5 }}
+        position="relative"
       >
-        <Image
-          src={homeData?.image || ""}
-          alt="Asim Ali Murtaza"
-          objectFit="cover"
-          w="100%"
-          h="100%"
-        />
+        {/* Skeleton Loader */}
+        {loading && (
+          <MotionBox
+            position="absolute"
+            top="0"
+            left="0"
+            width="100%"
+            height="100%"
+            borderRadius="full"
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <Skeleton
+              height="100%"
+              width="100%"
+              borderRadius="full"
+              fadeDuration={0.8} // Smooth fade effect
+            />
+          </MotionBox>
+        )}
+
+        {/* Image with Smooth Fade-in */}
+        <MotionBox
+          initial={{ opacity: 0 }}
+          animate={{ opacity: loading ? 0 : 1 }} // Show image only after loading completes
+          transition={{ duration: 2 }}
+        >
+          <Image
+            src={homeData?.image || ""}
+            alt="Asim Ali Murtaza"
+            objectFit="cover"
+            w="100%"
+            h="100%"
+            borderRadius="full"
+          />
+        </MotionBox>
       </MotionBox>
     </Flex>
   );
