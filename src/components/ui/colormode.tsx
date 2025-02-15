@@ -7,12 +7,16 @@ export function ColorModeSwitcher() {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
-    <Button onClick={toggleColorMode} sx={{
-      padding: "0.5rem",
-      display: "flex",
-      justifyItems: "left"
-    }}>
-        {colorMode === "light" ? <FaMoon /> : <FaSun />}
+    <Button
+      variant={"ghost"}
+      onClick={toggleColorMode}
+      sx={{
+        padding: "0.5rem",
+        display: "flex",
+        justifyItems: "left",
+      }}
+    >
+      {colorMode === "light" ? <FaMoon /> : <FaSun />}
     </Button>
   );
 }

@@ -23,8 +23,8 @@ const customTheme = extendTheme({
   styles: {
     global: (props: any) => ({
       body: {
-        bg: props.colorMode === "dark" ? "gray.900" : "white",
-        color: props.colorMode === "dark" ? "white" : "gray.900",
+        bg: props.colorMode === "dark" ? "black" : "white",
+        color: props.colorMode === "dark" ? "white" : "black",
       },
     }),
   },
