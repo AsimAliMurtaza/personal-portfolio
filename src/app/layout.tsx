@@ -3,20 +3,16 @@ import { Providers } from "./providers";
 import { ThemeProvider } from "@/components/theme-provider";
 import { fonts } from "./fonts";
 import { cn } from "@/lib/utils";
-import Navbar from "@/components/Header";
-import PageFooter from "@/components/Footer";
-import { Analytics } from "@vercel/analytics/react";
+import ClientWrapper from "@/components/ClientWrapper"; // New wrapper
 
 export const metadata: Metadata = {
   title: "Asim Ali Murtaza",
-  description: "Asim&apos;s Personal portfolio",
+  description: "Asim's Personal Portfolio",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
       <body
@@ -32,10 +28,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Providers>
-            <Navbar />
-            {children}
-            <Analytics />
-            <PageFooter />
+            <ClientWrapper>{children}</ClientWrapper> {/* Wrap with client component */}
           </Providers>
         </ThemeProvider>
       </body>

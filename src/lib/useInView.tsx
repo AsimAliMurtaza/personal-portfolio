@@ -36,3 +36,4 @@ export default function useInView<T extends HTMLElement>(
 
   return isIntersecting;
 }
+//updated useInView.tsx
