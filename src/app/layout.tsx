@@ -1,17 +1,11 @@
 import type { Metadata } from "next";
-import { Inter as FontSans } from "next/font/google";
 import { Providers } from "./providers";
 import { ThemeProvider } from "@/components/theme-provider";
-
+import { fonts } from "./fonts";
 import { cn } from "@/lib/utils";
-import Navbar from "@/components/Page-Header";
-import PageFooter from "@/components/ui/Page-Footer";
+import Navbar from "@/components/Header";
+import PageFooter from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/react";
-
-const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
 
 export const metadata: Metadata = {
   title: "Asim's Portfolio",
@@ -27,8 +21,8 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
+          fonts.rubik.variable,
+          "antialiased bg-white dark:bg-black"
         )}
       >
         <ThemeProvider
@@ -39,8 +33,8 @@ export default function RootLayout({
         >
           <Providers>
             <Navbar />
-              {children}
-              <Analytics />
+            {children}
+            <Analytics />
             <PageFooter />
           </Providers>
         </ThemeProvider>

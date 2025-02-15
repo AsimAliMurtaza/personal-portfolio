@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Container,
   Box,
@@ -15,12 +16,10 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { FaEnvelope, FaPhone, FaMapMarkerAlt } from "react-icons/fa";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import useInView from "@/lib/useInView";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
 import emailjs from "emailjs-com";
-
 import { fetchContactData } from "@/lib/firebase";
 import { DocumentData } from "firebase/firestore";
 
@@ -45,10 +44,12 @@ export default function ContactMe() {
 
   const toast = useToast();
 
-  const inputBorderColor = useColorModeValue("green.400", "green.100");
-  const headingColor = useColorModeValue("green.500", "green.200");
-  const textColor = useColorModeValue("gray.800", "gray.200");
-  const bgColor = useColorModeValue("white", "gray.900");
+  const inputBorderColor = useColorModeValue("teal.300", "green.200");
+  const headingColor = useColorModeValue("teal.300", "green.200");
+  const textColor = useColorModeValue("gray.800", "gray.300");
+  const bgColor = useColorModeValue("white", "black");
+  const cardBg = useColorModeValue("gray.50", "black");
+  const hoverColor = useColorModeValue("black", "white");
 
   useEffect(() => {
     const getData = async () => {
@@ -91,7 +92,7 @@ export default function ContactMe() {
       toast({
         title: "Error.",
         description:
-          "Sending messages have been disabled. Please try again later",
+          "Sending messages have been disabled. Please try again later.",
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -102,8 +103,8 @@ export default function ContactMe() {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 100 }}
-      animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 50 }}
       transition={{ duration: 0.7 }}
     >
       <Container
@@ -112,68 +113,98 @@ export default function ContactMe() {
         id="contact"
         my={{ base: "100px", md: "80px" }}
         bg={bgColor}
-        p={8}
-        rounded="lg"
-        shadow="md"
+        textAlign="center"
       >
-        <Heading
-          as="h2"
-          size="xl"
-          color={headingColor}
-          textAlign="center"
-          mb={10}
-          fontWeight="thin"
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
         >
-          CONTACT
-        </Heading>
-        <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={10}>
+          <Heading
+          as="h1"
+          color={headingColor}
+          mb={10}
+          fontSize="4xl"
+          fontWeight="semibold"
+          letterSpacing="wide"
+        >
+            Get in Touch
+          </Heading>
+        </motion.div>
+
+        <Grid
+          templateColumns={{ base: "1fr", md: "1fr 1fr" }}
+          gap={8}
+          alignItems="center"
+        >
+          {/* Contact Form */}
           <GridItem>
-            <Box>
-              <Heading as="h2" size="lg" color={headingColor} mb={5}>
-                Just say Hello
+            <Box
+              p={6}
+              borderRadius="xl"
+              boxShadow="md"
+              bg={cardBg}
+              minH={{ base: "auto", md: "420px" }}
+            >
+              <Heading
+                as="h3"
+                size="lg"
+                textAlign={"left"}
+                color={headingColor}
+                mb={5}
+              >
+                Just Say Hello 👋
               </Heading>
               <form onSubmit={handleSubmit}>
-                <VStack spacing={5} align="start">
+                <VStack spacing={3} align="stretch">
                   <Input
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
                     placeholder="Your Name"
-                    variant="outline"
+                    variant="filled"
                     focusBorderColor={inputBorderColor}
                     color={textColor}
+                    borderRadius="lg"
                   />
                   <Input
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
                     placeholder="Your Email"
-                    variant="outline"
+                    variant="filled"
                     focusBorderColor={inputBorderColor}
                     color={textColor}
+                    borderRadius="lg"
                   />
                   <Input
                     name="subject"
                     value={formData.subject}
                     onChange={handleInputChange}
-                    placeholder="Your Subject"
-                    variant="outline"
+                    placeholder="Subject"
+                    variant="filled"
                     focusBorderColor={inputBorderColor}
                     color={textColor}
+                    borderRadius="lg"
                   />
                   <Textarea
                     name="message"
                     value={formData.message}
                     onChange={handleInputChange}
                     placeholder="Your Message"
-                    variant="outline"
+                    variant="filled"
                     focusBorderColor={inputBorderColor}
                     color={textColor}
+                    borderRadius="lg"
+                    rows={3}
                   />
                   <Button
                     type="submit"
-                    colorScheme="green"
-                    alignSelf="flex-start"
+                    bg={headingColor}
+                    textColor={bgColor}
+                    size="lg"
+                    borderRadius="full"
+                    _hover={{ color: hoverColor }}
                   >
                     Send Message
                   </Button>
@@ -181,31 +212,54 @@ export default function ContactMe() {
               </form>
             </Box>
           </GridItem>
+
+          {/* Contact Info */}
           <GridItem>
-            <Box>
-              <Heading as="h2" size="lg" color={headingColor} mb={5}>
+            <Box
+              minH={{ base: "auto", md: "420px" }}
+              
+              p={6}
+              borderRadius="xl"
+              boxShadow="md"
+              bg={cardBg}
+            >
+              <Heading
+                as="h3"
+                size="lg"
+                textAlign={"left"}
+                color={headingColor}
+                mb={5}
+              >
                 Contact Info
               </Heading>
               <VStack align="start" spacing={5} color={textColor}>
-                <Text>{contactData?.description}</Text>
+                <Text textAlign={"left"} fontSize="md">
+                  {contactData?.description}
+                </Text>
                 <HStack spacing={4}>
                   <FaEnvelope />
                   <VStack align="start" spacing={1}>
-                    <Text color={headingColor}>Email</Text>
+                    <Text fontWeight="bold" color={headingColor}>
+                      Email
+                    </Text>
                     <Text>{contactData?.email}</Text>
                   </VStack>
                 </HStack>
                 <HStack spacing={4}>
                   <FaPhone />
                   <VStack align="start" spacing={1}>
-                    <Text color={headingColor}>Phone</Text>
+                    <Text fontWeight="bold" color={headingColor}>
+                      Phone
+                    </Text>
                     <Text>{contactData?.phone}</Text>
                   </VStack>
                 </HStack>
                 <HStack spacing={4}>
                   <FaMapMarkerAlt />
                   <VStack align="start" spacing={1}>
-                    <Text color={headingColor}>Address</Text>
+                    <Text fontWeight="bold" color={headingColor}>
+                      Address
+                    </Text>
                     <Text>{contactData?.address}</Text>
                   </VStack>
                 </HStack>

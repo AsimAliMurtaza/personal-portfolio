@@ -1,50 +1,55 @@
 "use client";
+
 import { motion } from "framer-motion";
 import {
   Container,
   Box,
   Heading,
   Text,
-  Image,
   Grid,
   GridItem,
   VStack,
   HStack,
-  Button,
+  Icon,
   useColorModeValue,
+  Divider,
+  Badge,
+  Flex,
+  Button,
+  Spacer,
 } from "@chakra-ui/react";
-import { useRef, useState, useEffect } from "react";
+import {
+  FaPhone,
+  FaEnvelope,
+  FaMapMarkerAlt,
+  FaGlobe,
+  FaUserTie,
+} from "react-icons/fa";
+import { useState, useEffect } from "react";
+import { useRef } from "react";
 import useInView from "@/lib/useInView";
 import { fetchAboutMeData } from "@/lib/firebase";
 import { DocumentData } from "firebase/firestore";
 
 interface AboutMeData extends DocumentData {
   description: string;
-  image: string;
-  birthday: string;
   phone: string;
   email: string;
   from: string;
   language: string;
   freelance: string;
-  resume: string;
+  skills: { name: string; level: number }[];
 }
 
 export default function AboutMe() {
+  const [aboutMeData, setAboutMeData] = useState<AboutMeData | null>(null);
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { rootMargin: "-100px" });
-
-  const onClickHandler = () => {
-    window.open(`${aboutMeData?.resume}`);
-  };
-
-  const [aboutMeData, setAboutMeData] = useState<AboutMeData | null>(null);
 
   useEffect(() => {
     const getData = async () => {
       try {
         const data = await fetchAboutMeData();
-        console.log("Fetched data:", data);
         setAboutMeData(data as AboutMeData);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -53,170 +58,156 @@ export default function AboutMe() {
     getData();
   }, []);
 
-  const headingColor = useColorModeValue("green.500", "green.400");
-  const textColor = useColorModeValue("gray.800", "white");
-  const subTextColor = useColorModeValue("gray.600", "gray.300");
-  const labelColor = useColorModeValue("green.600", "green.200");
-  const buttonColorScheme = useColorModeValue("teal", "green");
-  const bgColor = useColorModeValue("white", "gray.900");
+  // Theme-based colors
+  const headingColor = useColorModeValue("teal.300", "green.200");
+  const textColor = useColorModeValue("gray.800", "gray.200");
+  const cardBgColor = useColorModeValue("whiteAlpha.600", "whiteAlpha.100");
+  const borderColor = useColorModeValue("teal.300", "green.200");
+  const buttonColor = useColorModeValue("teal.100", "green.500");
+  const onClickHandler = () => {
+    window.open(`${aboutMeData?.resume}`);
+  };
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 50 }}
+      initial={{ opacity: 0, y: 100 }}
+      animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
       transition={{ duration: 0.7 }}
     >
-      <Container
-        maxW="100%"
-        mx="auto"
-        id="about"
-        my={{ base: "50px", md: "80px" }}
-        px={{ base: "20px", md: "40px" }}
-        bg={bgColor} // Dynamically change background color
-      >
+      <Container maxW="6xl" py={24} id="about">
         <Heading
-          as="h2"
-          textAlign="center"
-          mb={{ base: 6, md: 10 }}
-          fontWeight="thin"
+          as="h1"
           color={headingColor}
-          fontSize={{ base: "2xl", md: "3xl" }}
+          fontSize="4xl"
+          fontWeight="semibold"
+          letterSpacing="wide"
+          textAlign="center"
+          mb={10}
         >
-          ABOUT ME
+          About Me
         </Heading>
-
-        <Grid
-          templateColumns={{ base: "1fr", md: "1fr 2fr" }}
-          gap={{ base: 6, md: 10 }}
-          alignItems="center"
+        <Flex
+          direction={{ base: "column", md: "row" }}
+          align="center"
+          justify="space-between"
+          textAlign={{ base: "center", md: "left" }}
         >
-          <GridItem>
-            <motion.div
-              ref={ref}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 50 }}
-              transition={{ duration: 0.7, delay: 0.3 }}
-            >
-              <Box
-                display="flex"
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="center"
-                bg="rgba(0, 0, 0, 0)"
-              >
-                <Image
-                  src={aboutMeData?.image}
-                  alt="profile"
-                  boxSize={{ base: "150px", md: "300px" }}
-                  objectFit="cover"
-                  borderRadius="full"
-                  mt={{ base: 0, md: 5 }}
-                />
-              </Box>
-            </motion.div>
-          </GridItem>
-          <GridItem>
-            <motion.div
-              ref={ref}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 50 }}
-              transition={{ duration: 0.7, delay: 0.5 }}
-            >
-              <Box>
-                <Text
-                  color={textColor}
-                  textAlign={{ base: "center", md: "left" }}
-                  mb={{ base: 4, md: 5 }}
-                  fontSize={{ base: "sm", md: "md" }}
-                >
-                  {aboutMeData?.description || "Description"}
-                </Text>
-                <VStack align={{ base: "center", md: "start" }} spacing={2}>
-                  <HStack>
-                    <Text
-                      color={labelColor}
-                      fontWeight="bold"
-                      fontSize={{ base: "sm", md: "md" }}
-                    >
-                      Phone:
-                    </Text>
-                    <Text color={textColor} fontSize={{ base: "sm", md: "md" }}>
-                      {aboutMeData?.phone}
-                    </Text>
-                  </HStack>
-                  <HStack>
-                    <Text
-                      color={labelColor}
-                      fontWeight="bold"
-                      fontSize={{ base: "sm", md: "md" }}
-                    >
-                      Email:
-                    </Text>
-                    <Text color={textColor} fontSize={{ base: "sm", md: "md" }}>
-                      {aboutMeData?.email}
-                    </Text>
-                  </HStack>
-                  <HStack>
-                    <Text
-                      color={labelColor}
-                      fontWeight="bold"
-                      fontSize={{ base: "sm", md: "md" }}
-                    >
-                      From:
-                    </Text>
-                    <Text color={textColor} fontSize={{ base: "sm", md: "md" }}>
-                      {aboutMeData?.from}
-                    </Text>
-                  </HStack>
-                  <HStack>
-                    <Text
-                      color={labelColor}
-                      fontWeight="bold"
-                      fontSize={{ base: "sm", md: "md" }}
-                    >
-                      Language:
-                    </Text>
-                    <Text color={textColor} fontSize={{ base: "sm", md: "md" }}>
-                      {aboutMeData?.language}
-                    </Text>
-                  </HStack>
-                  <HStack>
-                    <Text
-                      color={labelColor}
-                      fontWeight="bold"
-                      fontSize={{ base: "sm", md: "md" }}
-                    >
-                      Freelance:
-                    </Text>
-                    <Text color={textColor} fontSize={{ base: "sm", md: "md" }}>
-                      {aboutMeData?.freelance}
-                    </Text>
-                  </HStack>
-                </VStack>
-                <motion.div
-                  ref={ref}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 50 }}
-                  transition={{ duration: 0.7 }}
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Button
-                    colorScheme={buttonColorScheme}
-                    mt={{ base: 4, md: 5 }}
-                    size={{ base: "sm", md: "md" }}
-                    onClick={onClickHandler}
+          {/* Content Grid */}
+          <Grid
+            templateColumns={{ base: "1fr", md: "2fr 3fr" }}
+            gap={{ base: 8, md: 12 }}
+          >
+            {/* Personal Info & Contact */}
+            <GridItem>
+              <VStack spacing={4} align="stretch">
+                {/* Personal Information */}
+                {[
+                  { label: "Phone", value: aboutMeData?.phone, icon: FaPhone },
+                  {
+                    label: "Email",
+                    value: aboutMeData?.email,
+                    icon: FaEnvelope,
+                  },
+                  {
+                    label: "Location",
+                    value: aboutMeData?.from,
+                    icon: FaMapMarkerAlt,
+                  },
+                  {
+                    label: "Languages",
+                    value: aboutMeData?.language,
+                    icon: FaGlobe,
+                  },
+                ].map((item, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.2 }}
                   >
-                    Download Resume
-                  </Button>
+                    <HStack
+                      bg={cardBgColor}
+                      p={4}
+                      borderRadius="lg"
+                      boxShadow="lg"
+                      spacing={4}
+                      borderLeft="4px solid"
+                      borderColor={borderColor}
+                    >
+                      <Icon as={item.icon} boxSize={6} color={headingColor} />
+                      <Text fontSize="lg" color={textColor} fontWeight="medium">
+                        {item.value || "N/A"}
+                      </Text>
+                    </HStack>
+                  </motion.div>
+                ))}
+
+                {/* Freelance Availability */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <HStack
+                    bg={cardBgColor}
+                    p={4}
+                    borderRadius="lg"
+                    boxShadow="lg"
+                    justify="space-between"
+                  >
+                    <HStack>
+                      <Icon as={FaUserTie} boxSize={6} color={headingColor} />
+                      <Text fontSize="lg" color={textColor} fontWeight="medium">
+                        Freelance Status:
+                      </Text>
+                    </HStack>
+                    <Badge
+                      colorScheme={
+                        aboutMeData?.freelance === "Available" ? "green" : "red"
+                      }
+                      fontSize="sm"
+                      p={1.5}
+                      borderRadius="md"
+                    >
+                      {aboutMeData?.freelance || "N/A"}
+                    </Badge>
+                  </HStack>
                 </motion.div>
+              </VStack>
+            </GridItem>
+
+            {/* Description & Skills */}
+            <GridItem>
+              <Box bg={cardBgColor} p={6} borderRadius="lg" boxShadow="lg">
+                {/* Description */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7 }}
+                >
+                  <Text
+                    color={textColor}
+                    fontSize={{ base: "md", md: "lg" }}
+                    lineHeight="tall"
+                    textAlign="justify"
+                    fontWeight="medium"
+                  >
+                    {aboutMeData?.description ||
+                      "Passionate developer who loves to build high-performance, user-friendly applications."}
+                  </Text>
+                </motion.div>
+
+                {/* Divider */}
+                <Spacer my={6} borderColor={headingColor} />
+                <Button onClick={onClickHandler} size="sm" bg={buttonColor} borderRadius="10px">
+                  Download CV
+                </Button>
+                {/* Skills Section */}
               </Box>
-            </motion.div>
-          </GridItem>
-        </Grid>
+            </GridItem>
+          </Grid>
+        </Flex>
       </Container>
     </motion.div>
   );

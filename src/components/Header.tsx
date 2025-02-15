@@ -29,37 +29,34 @@ import { ColorModeSwitcher } from "./ui/colormode";
 
 const Navbar: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const textColor = useColorModeValue("teal.100", "green.100");
-
+  const textColor = useColorModeValue("teal.400", "green.100");
+  const headerColor = useColorModeValue("white", "black")
   return (
     <Container
       as="nav"
       maxW="100%"
       position="fixed"
       top="0"
-      height="60px"
-      bg="rgba(0.3,0.2,0.39, 0.4)"
-      color="white"
+      height={16}
       zIndex="1000"
       px={4}
+      bg={headerColor}
     >
       <Flex align="center" h="100%">
-        <HStack spacing={4}>
-          <Text fontSize="2xl" fontWeight="bold" color={textColor}>
+        <Text
+          _hover={{ cursor: "pointer" }}
+          fontSize="2xl"
+          fontWeight="bold"
+          color={textColor}
+        >
+          <ScrollLink to="home" smooth={true} duration={500} offset={-70}>
             <Icon as={FaCode} mr={2} /> Asim
-          </Text>
+          </ScrollLink>
+        </Text>
+        <Spacer />
+
+        <HStack spacing={4}>
           <HStack as="nav" spacing={4} display={{ base: "none", md: "flex" }}>
-            <ScrollLink to="home" smooth={true} duration={500} offset={-70}>
-              <ChakraLink
-                sx={{
-                  _hover: {
-                    color: "green.400",
-                  },
-                }}
-              >
-                HOME
-              </ChakraLink>
-            </ScrollLink>
             <ScrollLink to="about" smooth={true} duration={500} offset={-70}>
               <ChakraLink
                 sx={{
@@ -69,6 +66,29 @@ const Navbar: React.FC = () => {
                 }}
               >
                 ABOUT
+              </ChakraLink>
+            </ScrollLink>
+
+            <ScrollLink to="services" smooth={true} duration={500} offset={-70}>
+              <ChakraLink
+                sx={{
+                  _hover: {
+                    color: "green.400",
+                  },
+                }}
+              >
+                SERVICES
+              </ChakraLink>
+            </ScrollLink>
+            <ScrollLink to="skills" smooth={true} duration={500} offset={-70}>
+              <ChakraLink
+                sx={{
+                  _hover: {
+                    color: "green.400",
+                  },
+                }}
+              >
+                SKILLS
               </ChakraLink>
             </ScrollLink>
             <ScrollLink to="resume" smooth={true} duration={500} offset={-70}>
@@ -162,7 +182,7 @@ const Navbar: React.FC = () => {
         <DrawerOverlay />
         <DrawerContent
           sx={{
-            backdropFilter: "blur(5px)",
+            backdropFilter: "blur(10px)",
             backgroundColor: "rgba(0, 0, 0, 0.2)",
             color: "white",
             borderRadius: "10px",
@@ -217,6 +237,40 @@ const Navbar: React.FC = () => {
                   }}
                 >
                   ABOUT
+                </ChakraLink>
+              </ScrollLink>
+              <ScrollLink
+                to="services"
+                smooth={true}
+                duration={500}
+                offset={-70}
+                onClick={onClose}
+              >
+                <ChakraLink
+                  sx={{
+                    _hover: {
+                      color: "green.100",
+                    },
+                  }}
+                >
+                  SERVICES
+                </ChakraLink>
+              </ScrollLink>
+              <ScrollLink
+                to="skills"
+                smooth={true}
+                duration={500}
+                offset={-70}
+                onClick={onClose}
+              >
+                <ChakraLink
+                  sx={{
+                    _hover: {
+                      color: "green.100",
+                    },
+                  }}
+                >
+                  SKILLS
                 </ChakraLink>
               </ScrollLink>
               <ScrollLink

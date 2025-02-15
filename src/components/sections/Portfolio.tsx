@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Container,
   Grid,
@@ -10,10 +11,11 @@ import {
   Box,
   Button,
   useColorModeValue,
+  VStack,
+  Flex,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
-import useInView from "@/lib/useInView";
+import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
@@ -27,16 +29,15 @@ interface Project {
 }
 
 export default function Portfolio() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { rootMargin: "-100px" });
   const [projects, setProjects] = useState<Project[]>([]);
+  const [visibleProjects, setVisibleProjects] = useState<Project[]>([]);
+  const [itemsToShow, setItemsToShow] = useState(4); // Projects per load
 
   // Define colors for light and dark modes
-  const headingColor = useColorModeValue("green.500", "green.300");
+  const headingColor = useColorModeValue("teal.300", "green.200");
   const textColor = useColorModeValue("gray.800", "gray.300");
-  const bgColor = useColorModeValue("white", "gray.900");
-  const buttonColor = useColorModeValue("green.600", "green.400");
-
+  const cardBg = useColorModeValue("gray.50", "whiteAlpha.100");
+  const buttonBg = useColorModeValue("teal.300", "green.200");
   useEffect(() => {
     const fetchProjects = async () => {
       try {
@@ -57,6 +58,7 @@ export default function Portfolio() {
         });
 
         setProjects(fetchedProjects);
+        setVisibleProjects(fetchedProjects.slice(0, itemsToShow));
       } catch (error) {
         console.error("Error fetching projects:", error);
       }
@@ -65,116 +67,163 @@ export default function Portfolio() {
     fetchProjects();
   }, []);
 
+  const handleShowMore = () => {
+    const newItemsToShow = itemsToShow + 4; // Load 4 more items
+    setItemsToShow(newItemsToShow);
+    setVisibleProjects(projects.slice(0, newItemsToShow));
+  };
+
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 100 }}
-      animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
-      transition={{ duration: 0.7 }}
+    <Container
+      maxW="100%"
+      mx="auto"
+      id="portfolio"
+      my={{ base: "100px", md: "80px" }}
+      p={8}
+      textAlign="center"
     >
-      <Container
-        maxW="100%"
-        mx="auto"
-        id="portfolio"
-        my={{ base: "100px", md: "80px" }}
-        bg={bgColor}
-        borderRadius="lg"
-        p={8}
-        shadow="md"
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7 }}
       >
         <Heading
-          as="h2"
+          as="h1"
           color={headingColor}
           mb={10}
-          textAlign="center"
-          fontWeight="thin"
+          fontSize="4xl"
+          fontWeight="semibold"
+          letterSpacing="wide"
         >
           PORTFOLIO
         </Heading>
-        <Grid
-          templateColumns={{
-            base: "1fr",
-            md: "1fr 1fr",
-            lg: "repeat(4, 1fr)",
-          }}
-          gap={5}
-        >
-          {projects.map((project) => (
+      </motion.div>
+
+      <Grid
+        templateColumns={{
+          sm: "repeat(2, 1fr)",
+          md: "repeat(3, 1fr)",
+          lg: "repeat(4, 1fr)",
+        }}
+        gap={4}
+      >
+        {visibleProjects.map((project, index) => (
+          <motion.div
+            key={project.id}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: index * 0.1 }}
+          >
             <motion.div
-              key={project.id}
-              ref={ref}
-              initial={{ opacity: 0, y: 100 }}
-              animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
-              transition={{ duration: 0.7, delay: 0.8 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ duration: 0.2 }}
             >
-              <motion.div
-                key={project.id}
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.2 }}
-              >
-                <GridItem key={project.id}>
-                  <Box
-                    backgroundSize="cover"
-                    display="flex"
-                    minHeight="30vh"
-                    flexDirection="column"
-                    justifyContent="center"
-                    alignItems="center"
-                    border="0"
-                  >
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      borderRadius="10px"
-                      objectFit="cover"
-                      width="100%"
-                      height="200px"
-                    />
-                  </Box>
-                  <Heading
-                    as="h3"
-                    size="xl"
-                    color={headingColor}
-                    mb={3}
-                    textAlign="center"
-                    fontWeight="thin"
-                  >
-                    {project.title}
-                  </Heading>
-                  <Text fontWeight="thin" textAlign="center" color={textColor}>
-                    {project.description}
-                  </Text>
-                  <Box textAlign="center" mt={5}>
-                    <Link
-                      href={project.githubLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
+              <GridItem>
+                <Box
+                  p={2}
+                  borderRadius="20px"
+                  boxShadow="md"
+                  bg={cardBg}
+                  transition="all 0.3s"
+                  _hover={{ boxShadow: "lg", transform: "translateY(-3px)" }}
+                  minH="280px" // Ensuring all cards have equal height
+                  maxW="320px" // Smaller width for compact design
+                  mx="auto" // Center align for consistency
+                >
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    borderRadius="xl"
+                    objectFit="cover"
+                    width="100%"
+                    height="140px"
+                    transition="transform 0.3s"
+                    _hover={{ transform: "scale(1.02)" }}
+                  />
+                  <VStack spacing={3} mt={2} align="stretch">
+                    <Heading
+                      as="h3"
+                      size="sm"
+                      color={headingColor}
+                      fontWeight="semibold"
+                      textAlign="center"
                     >
-                      <Button colorScheme="green" variant="ghost" color={buttonColor}>
-                        View on GitHub
+                      {project.title}
+                    </Heading>
+                    <Text
+                      fontSize="sm"
+                      textAlign="center"
+                      color={textColor}
+                      px={2}
+                      noOfLines={3}
+                    >
+                      {project.description}
+                    </Text>
+                  </VStack>
+                </Box>
+                <Flex justify="center" mb={6} mt={4}>
+                  <Link href={project.githubLink} target="_blank">
+                    <Button
+                      size="sm"
+                      borderRadius="10px"
+                      color={buttonBg}
+                      variant="ghost"
+                      _hover={{ bg: buttonBg, color: "black" }}
+                    >
+                      GitHub
+                    </Button>
+                  </Link>
+                  {project.liveLink && (
+                    <Link href={project.liveLink} target="_blank">
+                      <Button
+                        size="sm"
+                        ml={2}
+                        borderRadius="full"
+                        color={buttonBg}
+                        variant="ghost"
+                        _hover={{ bg: buttonBg, color: "black" }}
+                      >
+                        Live Demo
                       </Button>
                     </Link>
-                  </Box>
-                  {project.liveLink && (
-                    <Box textAlign="center" mt={2}>
-                      <Link
-                        href={project.liveLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Button colorScheme="green" variant="ghost" color={buttonColor}>
-                          View Live Demo
-                        </Button>
-                      </Link>
-                    </Box>
                   )}
-                </GridItem>
-              </motion.div>
+                </Flex>
+              </GridItem>
             </motion.div>
-          ))}
-        </Grid>
-      </Container>
-    </motion.div>
+          </motion.div>
+        ))}
+      </Grid>
+
+      {/* Show More Button */}
+      {itemsToShow < projects.length && (
+        <Box textAlign="center" mt={8}>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Button
+              colorScheme="green"
+              size="sm"
+              borderRadius="lg"
+              px={5}
+              py={2}
+              fontSize="sm"
+              fontWeight="medium"
+              color={buttonBg}
+              variant="outline"
+              _hover={{
+                transform: "scale(1.05)",
+                bg: buttonBg,
+                color: "black",
+              }}
+              onClick={handleShowMore}
+            >
+              Show More Projects
+            </Button>
+          </motion.div>
+        </Box>
+      )}
+    </Container>
   );
 }

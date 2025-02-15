@@ -2,41 +2,37 @@
 
 import {
   Box,
-  Container,
   Heading,
-  Image,
   Text,
-  Link as ChakraLink,
-  Icon,
+  Flex,
+  Image,
+  HStack,
   useColorModeValue,
+  Link,
+  VStack,
 } from "@chakra-ui/react";
-import { FaFacebook, FaGithub, FaTwitter } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 import { fetchHomeData } from "@/lib/firebase";
-import { DocumentData } from "firebase/firestore";
-import { useEffect, useState, useRef } from "react";
-import useInView from "@/lib/useInView";
+import { useEffect, useState } from "react";
 
-interface HomeData extends DocumentData {
+// Motion components
+const MotionBox = motion(Box);
+const MotionText = motion(Text);
+const MotionHeading = motion(Heading);
+
+interface HomeData {
   description: string;
   image: string;
 }
 
-export default function Home() {
+export default function HeroSection() {
   const [homeData, setHomeData] = useState<HomeData | null>(null);
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { rootMargin: "-100px" });
-
-  const bgColor = useColorModeValue("white", "gray.900");
-  const textColor = useColorModeValue("gray.800", "white");
-  const headingColor = useColorModeValue("teal.600", "green.100");
-  const linkHoverColor = useColorModeValue("teal.600", "green.100");
 
   useEffect(() => {
     const getData = async () => {
       try {
         const data = await fetchHomeData();
-        console.log("Fetched data:", data);
         setHomeData(data as HomeData);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -45,125 +41,148 @@ export default function Home() {
     getData();
   }, []);
 
+  // Dynamic color values based on color mode
+  const textColor = useColorModeValue("gray.900", "green.100");
+  const buttonHoverColor = useColorModeValue("teal.600", "green.400");
+  const borderColor = useColorModeValue("green.500", "green.300");
+  const gradientText = useColorModeValue(
+    "linear-gradient(90deg, teal.400, teal.200)",
+    "linear-gradient(170deg, green.300, whiteAlpha.900)"
+  );
+
   return (
-    <motion.div
+    <Flex
+      direction={{ base: "column", md: "row" }}
+      align="center"
+      justify="space-between"
+      textAlign={{ base: "center", md: "left" }}
+      minH="100vh"
+      px={{ base: 4, md: 5, lg: 10 }}
+      py={{ base: 20, md: 20 }}
       id="home"
-      ref={ref}
-      initial={{ opacity: 0, y: 100 }}
-      animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
-      transition={{
-        duration: 0.5,
-      }}
     >
-      <Box
-        bg={bgColor} // Dynamically change background color
-        maxW="100%"
-        display="flex"
-        mt={20}
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-        color={textColor} // Dynamically change text color
-        minH="100vh"
+      {/* Left Content */}
+      <MotionBox
+        maxW={{ base: "100%", md: "650px" }}
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
-          transition={{
-            duration: 0.5,
-          }}
+        <MotionHeading
+          as="h1"
+          size={{ base: "2xl", md: "3xl" }} // Responsive font size
+          mb={4}
+          bgClip="text"
+          bgGradient={gradientText}
+          fontWeight="bold"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
         >
-          <Box borderRadius="full" overflow="hidden">
-            <Image
-              src={homeData?.image}
-              alt="profile-pic"
-              boxSize={{ base: "150px", md: "200px" }}
-              objectFit="cover"
-            />
-          </Box>
-        </motion.div>
+          Hi, I am Asim Ali Murtaza
+        </MotionHeading>
 
-        <Container maxW="container.md" textAlign="center" mt={10}>
-          <motion.div
-            ref={ref}
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
-            transition={{
-              delay: 0.5,
-              duration: 0.5,
-            }}
-          >
-            <Heading as="h1" size="xl">
-              Hi, I am
-            </Heading>
+        <MotionText
+          fontSize={{ base: "xl", md: "2xl" }} // Responsive font size
+          fontWeight="bold"
+          color={textColor}
+          mb={4}
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.2 }}
+        >
+          A Passionate Developer
+        </MotionText>
 
-            <Heading as="h2" size="2xl" color={headingColor}>
-              Muhammad Asim Ali Murtaza
-            </Heading>
-          </motion.div>
-        </Container>
+        <MotionText
+          fontSize={{ base: "md", md: "lg" }} // Responsive font size
+          mb={8}
+          color="gray.500"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.4 }}
+        >
+          {homeData?.description || ""}
+        </MotionText>
 
-        <Container maxW="container.md" textAlign="center" mt={10}>
-          <motion.div
-            ref={ref}
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
-            transition={{
-              delay: 1,
-              duration: 0.5,
-            }}
-          >
-            <Text>{homeData?.description}</Text>
-            <Box
-              mt={5}
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "20px",
-              }}
-            >
-              <ChakraLink
-                sx={{
-                  _hover: {
-                    color: linkHoverColor,
-                  },
-                }}
-                href="https://x.com/heyits_asim"
-                target="_blank"
-                rel="noopener noreferrer"
+        {/* Action Buttons */}
+        <VStack spacing={4} align={{ base: "center", md: "flex-start" }}>
+          <HStack spacing={4}>
+            {/* Social Media Links */}
+            <Link href="https://github.com/AsimAliMurtaza" target="_blank">
+              <MotionBox
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                borderRadius="full"
+                borderWidth="1px"
+                borderColor={borderColor}
+                color={textColor}
+                _hover={{ bg: buttonHoverColor, color: "white" }}
+                p={2}
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
               >
-                <Icon as={FaTwitter} />
-              </ChakraLink>
-              <ChakraLink
-                sx={{
-                  _hover: {
-                    color: linkHoverColor,
-                  },
-                }}
-                href="https://facebook.com/asim90209"
-                target="_blank"
-                rel="noopener noreferrer"
+                <FaGithub />
+              </MotionBox>
+            </Link>
+            <Link href="https://linkedin.com/in/AsimAliMurtaza" target="_blank">
+              <MotionBox
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                borderRadius="full"
+                borderWidth="1px"
+                borderColor={borderColor}
+                color={textColor}
+                _hover={{ bg: buttonHoverColor, color: "white" }}
+                p={2}
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
               >
-                <Icon as={FaFacebook} />
-              </ChakraLink>
-              <ChakraLink
-                sx={{
-                  _hover: {
-                    color: linkHoverColor,
-                  },
-                }}
-                href="https://github.com/AsimAliMurtaza"
-                target="_blank"
-                rel="noopener noreferrer"
+                <FaLinkedin />
+              </MotionBox>
+            </Link>
+            <Link href="https://x.com/heyits_asim" target="_blank">
+              <MotionBox
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                borderRadius="full"
+                borderWidth="1px"
+                borderColor={borderColor}
+                color={textColor}
+                _hover={{ bg: buttonHoverColor, color: "white" }}
+                p={2}
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
               >
-                <Icon as={FaGithub} />
-              </ChakraLink>
-            </Box>
-          </motion.div>
-        </Container>
-      </Box>
-    </motion.div>
+                <FaTwitter />
+              </MotionBox>
+            </Link>
+          </HStack>
+        </VStack>
+      </MotionBox>
+
+      {/* Right Image */}
+      <MotionBox
+        mt={{ base: 10, md: 0 }}
+        borderRadius="100%"
+        maxH={{ base: "250px", md: "350px" }}
+        maxW={{ base: "250px", md: "350px" }}
+        overflow="hidden"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, delay: 0.5 }}
+      >
+        <Image
+          src={homeData?.image || ""}
+          alt="Asim Ali Murtaza"
+          objectFit="cover"
+          w="100%"
+          h="100%"
+        />
+      </MotionBox>
+    </Flex>
   );
 }

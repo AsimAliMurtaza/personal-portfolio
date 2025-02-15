@@ -9,7 +9,7 @@ import Skills from "@/components/sections/Skills";
 import { Container, useColorModeValue } from "@chakra-ui/react";
 
 export default function App() {
-  const bgColor = useColorModeValue("white", "gray.900");
+  const bgColor = useColorModeValue("white", "black");
   return (
       <Container maxW="container.xl" bg={bgColor}>
         <Home />
