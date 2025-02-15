@@ -8,8 +8,8 @@ import PageFooter from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
-  title: "Asim's Portfolio",
-  description: "My Personal portfolio",
+  title: "Asim Ali Murtaza",
+  description: "Asim&apos;s Personal portfolio",
 };
 
 export default function RootLayout({
