@@ -35,6 +35,9 @@ interface Skill {
   value: number;
 }
 
+const MotionBox = motion(Box);
+const MotionText = motion(Text);
+
 export default function Skills() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { rootMargin: "-100px" });
@@ -94,7 +97,7 @@ export default function Skills() {
       animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
       transition={{ duration: 0.8 }}
     >
-      <Container  maxW="6xl" py={24} bg={bgColor} id="skills">
+      <Container maxW="6xl" py={24} bg={bgColor} id="skills">
         <Heading
           as="h1"
           color={headingColor}
@@ -127,14 +130,26 @@ export default function Skills() {
                 (IconComponent, index) => (
                   <GridItem key={index}>
                     <VStack spacing={2} align="center">
-                      <Box
+                      <MotionBox
                         borderRadius="full"
                         bg={cardBgColor}
                         p={6}
-                        transition="all 0.3s ease"
                         _hover={{
                           transform: "scale(1.05)",
                           bg: cardHoverBgColor,
+                        }}
+                        overflow="hidden"
+                        initial={{ opacity: 0, y: 40, scale: 0.9 }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={{
+                          duration: 0.6,
+                          delay: index * 0.2,
+                          ease: "easeOut",
+                        }}
+                        viewport={{ once: true }}
+                        whileHover={{
+                          scale: 1.05,
+                          transition: { duration: 0.3 },
                         }}
                       >
                         <Icon
@@ -142,8 +157,24 @@ export default function Skills() {
                           boxSize={20}
                           color={iconColor}
                         />
-                      </Box>
-                      <Text color={textColor} fontWeight="medium">
+                      </MotionBox>
+                      <MotionText
+                        overflow="hidden"
+                        initial={{ opacity: 0, y: 40, scale: 0.9 }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={{
+                          duration: 0.6,
+                          delay: index * 0.2,
+                          ease: "easeOut",
+                        }}
+                        viewport={{ once: true }}
+                        whileHover={{
+                          scale: 1.05,
+                          transition: { duration: 0.3 },
+                        }}
+                        color={textColor}
+                        fontWeight="medium"
+                      >
                         {
                           [
                             "Node.js",
@@ -154,7 +185,7 @@ export default function Skills() {
                             "Git",
                           ][index]
                         }
-                      </Text>
+                      </MotionText>
                     </VStack>
                   </GridItem>
                 )
@@ -195,19 +226,26 @@ export default function Skills() {
                 }}
               >
                 {skills.map((skill) => (
-                  <Box
+                  <MotionBox
                     key={skill.id}
                     width="100%"
                     bg={cardBgColor}
                     borderRadius="xl"
                     p={4}
                     mb={4}
-                    transition="all 0.3s ease"
                     _hover={{
                       transform: "translateY(-5px)",
                       boxShadow: "lg",
                       bg: cardHoverBgColor,
                     }}
+                    overflow="hidden"
+                    initial={{ opacity: 0, y: 40, scale: 0.9 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{
+                      duration: 0.6,
+                      ease: "easeOut",
+                    }}
+                    viewport={{ once: true }}
                   >
                     <Text
                       color={textColor}
@@ -223,7 +261,7 @@ export default function Skills() {
                       value={skill.value}
                       borderRadius="full"
                     />
-                  </Box>
+                  </MotionBox>
                 ))}
               </Box>
 

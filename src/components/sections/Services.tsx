@@ -21,6 +21,8 @@ interface Service {
   description: string;
 }
 
+const MotionBox = motion(Box);
+
 // Icon Mapper for Service Types
 const getServiceIcon = (title: string) => {
   const icons: { [key: string]: JSX.Element } = {
@@ -111,7 +113,7 @@ const Services = () => {
               transition={{ delay: index * 0.2 }}
             >
               <GridItem>
-                <Box
+                <MotionBox
                   bg={cardBgColor}
                   p={8}
                   borderRadius="xl"
@@ -119,10 +121,21 @@ const Services = () => {
                   border={`1px solid ${borderColor}`}
                   textAlign="center"
                   backdropFilter="blur(10px)"
-                  transition="all 0.3s"
                   minH={["auto", "220px"]}
                   maxH={["auto", "220px"]}
-                  _hover={{ boxShadow: "xl", transform: "scale(1.05)" }}
+                  overflow="hidden"
+                  initial={{ opacity: 0, y: 40, scale: 0.9 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: index * 0.2,
+                    ease: "easeOut",
+                  }}
+                  viewport={{ once: true }}
+                  whileHover={{
+                    scale: 1.05,
+                    transition: { duration: 0.3 },
+                  }}
                 >
                   {/* Service Icon */}
                   <Icon
@@ -152,7 +165,7 @@ const Services = () => {
                   >
                     {service.description}
                   </Text>
-                </Box>
+                </MotionBox>
               </GridItem>
             </motion.div>
           ))}
