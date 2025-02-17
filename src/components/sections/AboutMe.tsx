@@ -41,6 +41,8 @@ interface AboutMeData extends DocumentData {
   skills: { name: string; level: number }[];
 }
 
+const MotionHStack = motion(HStack);
+
 export default function AboutMe() {
   const [aboutMeData, setAboutMeData] = useState<AboutMeData | null>(null);
   const ref = useRef<HTMLDivElement>(null);
@@ -125,7 +127,7 @@ export default function AboutMe() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.2 }}
                   >
-                    <HStack
+                    <MotionHStack
                       bg={cardBgColor}
                       p={4}
                       borderRadius="lg"
@@ -133,12 +135,19 @@ export default function AboutMe() {
                       spacing={4}
                       borderLeft="4px solid"
                       borderColor={borderColor}
+                      initial={{ opacity: 0, x: -40, scale: 0.9 }}
+                      whileInView={{ opacity: 1, x: 0, scale: 1 }}
+                      transition={{
+                        duration: 0.6,
+                        ease: "easeOut",
+                      }}
+                      viewport={{ once: true }}
                     >
                       <Icon as={item.icon} boxSize={6} color={headingColor} />
                       <Text fontSize="lg" color={textColor} fontWeight="medium">
                         {item.value || "N/A"}
                       </Text>
-                    </HStack>
+                    </MotionHStack>
                   </motion.div>
                 ))}
 
@@ -199,7 +208,12 @@ export default function AboutMe() {
 
                 {/* Divider */}
                 <Spacer my={6} borderColor={headingColor} />
-                <Button onClick={onClickHandler} size="sm" bg={buttonColor} borderRadius="10px">
+                <Button
+                  onClick={onClickHandler}
+                  size="sm"
+                  bg={buttonColor}
+                  borderRadius="10px"
+                >
                   Download CV
                 </Button>
                 {/* Skills Section */}
