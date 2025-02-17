@@ -30,6 +30,8 @@ interface ContactData extends DocumentData {
   address: string;
 }
 
+const MotionVStack = motion(VStack);
+
 export default function ContactMe() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { rootMargin: "-100px" });
@@ -121,13 +123,13 @@ export default function ContactMe() {
           transition={{ duration: 0.5 }}
         >
           <Heading
-          as="h1"
-          color={headingColor}
-          mb={10}
-          fontSize="4xl"
-          fontWeight="semibold"
-          letterSpacing="wide"
-        >
+            as="h1"
+            color={headingColor}
+            mb={10}
+            fontSize="4xl"
+            fontWeight="semibold"
+            letterSpacing="wide"
+          >
             Get in Touch
           </Heading>
         </motion.div>
@@ -156,7 +158,18 @@ export default function ContactMe() {
                 Just Say Hello 👋
               </Heading>
               <form onSubmit={handleSubmit}>
-                <VStack spacing={3} align="stretch">
+                <MotionVStack
+                  spacing={3}
+                  align="stretch"
+                  overflow="hidden"
+                  initial={{ opacity: 0, x: -40, scale: 0.9 }}
+                  whileInView={{ opacity: 1, x: 0, scale: 1 }}
+                  transition={{
+                    duration: 0.6,
+                    ease: "easeOut",
+                  }}
+                  viewport={{ once: true }}
+                >
                   <Input
                     name="name"
                     value={formData.name}
@@ -208,7 +221,7 @@ export default function ContactMe() {
                   >
                     Send Message
                   </Button>
-                </VStack>
+                </MotionVStack>
               </form>
             </Box>
           </GridItem>
@@ -217,7 +230,6 @@ export default function ContactMe() {
           <GridItem>
             <Box
               minH={{ base: "auto", md: "420px" }}
-              
               p={6}
               borderRadius="xl"
               boxShadow="md"

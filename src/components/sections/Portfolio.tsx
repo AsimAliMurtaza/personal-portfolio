@@ -28,6 +28,8 @@ interface Project {
   liveLink?: string;
 }
 
+const MotionBox = motion(Box);
+
 export default function Portfolio() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [visibleProjects, setVisibleProjects] = useState<Project[]>([]);
@@ -120,16 +122,27 @@ export default function Portfolio() {
               transition={{ duration: 0.2 }}
             >
               <GridItem>
-                <Box
+                <MotionBox
                   p={2}
                   borderRadius="20px"
                   boxShadow="md"
                   bg={cardBg}
-                  transition="all 0.3s"
-                  _hover={{ boxShadow: "lg", transform: "translateY(-3px)" }}
                   minH="280px" // Ensuring all cards have equal height
                   maxW="320px" // Smaller width for compact design
                   mx="auto" // Center align for consistency
+                  overflow="hidden"
+                  initial={{ opacity: 0, y: 40, scale: 0.9 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: index * 0.2,
+                    ease: "easeOut",
+                  }}
+                  viewport={{ once: true }}
+                  whileHover={{
+                    scale: 1.05,
+                    transition: { duration: 0.3 },
+                  }}
                 >
                   <Image
                     src={project.image}
@@ -161,7 +174,7 @@ export default function Portfolio() {
                       {project.description}
                     </Text>
                   </VStack>
-                </Box>
+                </MotionBox>
                 <Flex justify="center" mb={6} mt={4}>
                   <Link href={project.githubLink} target="_blank">
                     <Button
