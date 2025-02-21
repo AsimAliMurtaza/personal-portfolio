@@ -129,16 +129,6 @@ const LoadingScreen = () => {
           sx={{ filter: "drop-shadow(0px 0px 8px rgba(72, 187, 120, 0.8))" }}
         />
 
-        {/* Improved Typography - Dots Stay Right-Aligned */}
-        <Heading fontSize="lg" fontWeight="medium" color={textColor}>
-          {randomText}
-          <span style={{ display: "inline-block", width: "2ch" }}>
-            {".".repeat(dotCount)}
-          </span>
-        </Heading>
-        <Text fontSize="sm" color="gray.400" maxW="80%">
-          by the way, did you know that…
-        </Text>
         {/* Random Coding Fact */}
         <Text fontSize="lg" color="gray.400" maxW="80%">
           {fact}
