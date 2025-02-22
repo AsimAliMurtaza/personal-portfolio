@@ -127,6 +127,18 @@ const Navbar: React.FC = () => {
                 </ChakraLink>
               </ScrollLink>
 
+              <ScrollLink to="blogs" smooth={true} duration={500} offset={-70}>
+                <ChakraLink
+                  sx={{
+                    _hover: {
+                      color: "green.400",
+                    },
+                  }}
+                >
+                  BLOGS
+                </ChakraLink>
+              </ScrollLink>
+
               <ScrollLink
                 to="contact"
                 smooth={true}
