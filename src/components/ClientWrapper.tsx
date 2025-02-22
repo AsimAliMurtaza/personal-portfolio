@@ -41,7 +41,6 @@ export default function ClientWrapper({ children }: { children: React.ReactNode 
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1 }}
-          bg="black"
         >
           <Navbar />
           {children}

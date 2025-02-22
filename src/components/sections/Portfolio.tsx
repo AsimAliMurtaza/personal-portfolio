@@ -216,7 +216,6 @@ export default function Portfolio() {
             transition={{ duration: 0.3 }}
           >
             <Button
-              colorScheme="green"
               size="sm"
               borderRadius="lg"
               px={5}
@@ -224,7 +223,6 @@ export default function Portfolio() {
               fontSize="sm"
               fontWeight="medium"
               color={buttonBg}
-              variant="outline"
               _hover={{
                 transform: "scale(1.05)",
                 bg: buttonBg,

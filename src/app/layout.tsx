@@ -28,7 +28,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Providers>
-            <ClientWrapper>{children}</ClientWrapper> {/* Wrap with client component */}
+            <ClientWrapper>{children}</ClientWrapper>
           </Providers>
         </ThemeProvider>
       </body>
