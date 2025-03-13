@@ -21,6 +21,7 @@ import { db } from "@/lib/firebase";
 
 interface Project {
   id: string;
+  projectNo: number;
   title: string;
   description: string;
   image: string;
@@ -45,12 +46,13 @@ export default function Portfolio() {
       try {
         const projectCollection = collection(db, "portfolio-projects");
         const querySnapshot = await getDocs(projectCollection);
-
+  
         const fetchedProjects: Project[] = [];
         querySnapshot.forEach((doc) => {
           const data = doc.data();
           fetchedProjects.push({
             id: doc.id,
+            projectNo: data.projectNo,
             title: data.title,
             description: data.description,
             image: data.image,
@@ -58,16 +60,20 @@ export default function Portfolio() {
             liveLink: data.liveLink,
           });
         });
-
+  
+        // Sort projects by projectNo in ascending order
+        fetchedProjects.sort((a, b) => a.projectNo - b.projectNo);
+  
         setProjects(fetchedProjects);
         setVisibleProjects(fetchedProjects.slice(0, itemsToShow));
       } catch (error) {
         console.error("Error fetching projects:", error);
       }
     };
-
+  
     fetchProjects();
   }, []);
+  
 
   const handleShowMore = () => {
     const newItemsToShow = itemsToShow + 4; // Load 4 more items
