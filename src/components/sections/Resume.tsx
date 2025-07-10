@@ -8,7 +8,6 @@ import {
   GridItem,
   VStack,
   HStack,
-  useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { FaGraduationCap, FaBriefcase } from "react-icons/fa";
@@ -32,6 +31,49 @@ interface Experience {
   company: string;
 }
 
+// Define the animation variants for individual items
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+};
+
+// Define the container variants for staggering children
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2, // Delay between each child's animation
+      delayChildren: 0.3, // Delay before the first child starts animating
+    },
+  },
+};
+
+// Simple fadeIn variant for general use (if not already in lib/motion.ts)
+const fadeIn = (
+  direction: string,
+  type: string,
+  delay: number,
+  duration: number
+) => ({
+  hidden: {
+    x: direction === "left" ? 100 : direction === "right" ? -100 : 0,
+    y: direction === "up" ? 100 : direction === "down" ? -100 : 0,
+    opacity: 0,
+  },
+  show: {
+    x: 0,
+    y: 0,
+    opacity: 1,
+    transition: {
+      type: type,
+      delay: delay,
+      duration: duration,
+      ease: "easeOut",
+    },
+  },
+});
+
 export default function Resume() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { rootMargin: "-100px" });
@@ -41,10 +83,7 @@ export default function Resume() {
   const headingColor = useColorModeValue("teal.300", "green.200");
   const textColor = useColorModeValue("gray.900", "green.200");
   const bgColor = useColorModeValue("white", "black");
-  const cardBg = useColorModeValue(
-    "gray.50",
-    "rgba(30, 30, 30, 0.5)"
-  );
+  const cardBg = useColorModeValue("gray.50", "rgba(30, 30, 30, 0.5)");
   const buttonColor = useColorModeValue("teal.600", "green.200");
 
   useEffect(() => {
@@ -100,154 +139,185 @@ export default function Resume() {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 100 }}
-      animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
+      // This outer motion.div animates the entire section's entry
+      initial="hidden"
+      animate={isInView ? "show" : "hidden"}
       transition={{ duration: 0.7 }}
+      // Use this viewport for the overall section animation
+      viewport={{ once: true, amount: 0.2 }}
     >
       <Container maxW="6xl" py={24} bg={bgColor} id="resume">
-      <Heading
-          as="h1"
-          color={headingColor}
-          mb={10}
-          fontSize="4xl"
-          fontWeight="semibold"
-          letterSpacing="wide"
-          textAlign="center"
-        >
-          RESUME
-        </Heading>
+        {/* Animated Section Heading */}
+        <motion.div variants={fadeIn("up", "spring", 0.1, 1)}>
+          <Heading
+            as="h1"
+            color={headingColor}
+            mb={10}
+            fontSize="4xl"
+            fontWeight="semibold"
+            letterSpacing="wide"
+            textAlign="center"
+          >
+            RESUME
+          </Heading>
+        </motion.div>
+
         <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={6}>
           <GridItem>
+            {/* Main container for Education section, controls its own entry animation and then staggers children */}
             <motion.div
-              ref={ref}
-              initial={{ opacity: 0, y: 100 }}
-              animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
-              transition={{ duration: 0.7, delay: 0.7 }}
+              initial="hidden"
+              animate={isInView ? "show" : "hidden"}
+              variants={containerVariants} // Apply container variants for staggering
+              transition={{ delay: 0.3 }} // Delay the whole Education section animation slightly
+              viewport={{ once: true, amount: 0.2 }} // Only animate once
             >
-              <Box
-                p={6} // Padding for the card
-                borderRadius="xl" // Rounded corners for the card
-                boxShadow="md" // Subtle shadow for the card
-              >
-                <HStack align="center" mb={5}>
-                  <FaGraduationCap size={28} color={headingColor} /> 
-                  icon
-                  <Heading
-                    as="h2"
-                    size="lg"
-                    color={headingColor}
-                    fontWeight="semibold"
-                  >
-                    Education
-                  </Heading>
-                </HStack>
+              <Box p={6} borderRadius="xl" boxShadow="md">
+                {/* Education Subheading with animation */}
+                <motion.div variants={fadeIn("right", "spring", 0, 1)}>
+                  {" "}
+                  {/* Animation for 'Education' heading */}
+                  <HStack align="center" mb={5}>
+                    <FaGraduationCap size={28} color={headingColor} />
+                    <Heading
+                      as="h2"
+                      size="lg"
+                      color={headingColor}
+                      fontWeight="semibold"
+                    >
+                      Education
+                    </Heading>
+                  </HStack>
+                </motion.div>
                 <VStack align="start" spacing={6}>
                   {education.map((edu) => (
-                    <Box
-                      key={edu.id}
-                      pl={10} // Increased padding
-                      pt={4}
-                      pb={4}
-                      position="relative"
-                      borderRadius={"lg"} // Rounded corners
-                      w={"full"}
-                      _hover={{
-                        transform: "translateY(-5px)",
-                        transition: "all 0.3s ease",
-                      }} // Hover effect
-                      bg={cardBg} // Card background
-                    >
+                    // Each individual education item is now a motion.div
+                    <motion.div key={edu.id} variants={itemVariants}>
                       <Box
-                        position="absolute"
-                        left="16px" // Adjusted position
-                        top="30px"
-                        boxSize={2} // Larger dot
-                        bg={headingColor}
-                        borderRadius="full"
-                      />
-                      <Text
-                        fontWeight="bold"
-                        color={textColor}
-                        fontSize="xl"
-                        mb={2}
+                        pl={10}
+                        pt={4}
+                        pb={4}
+                        position="relative"
+                        borderRadius={"lg"}
+                        w={"500px"} // Fixed width for education items
+                        minH="150px" // Fixed min height for education items
+                        display="flex" // Enable flexbox for vertical alignment
+                        flexDirection="column"
+                        justifyContent="center" // Center content vertically
+                        _hover={{
+                          transform: "translateY(-5px)",
+                          transition: "all 0.3s ease",
+                        }}
+                        bg={cardBg}
                       >
-                        {edu.degree}
-                      </Text>
-                      <Text color={buttonColor} fontSize="md" mb={2}>
-                        {edu.year}
-                      </Text>
-                      <Text color={textColor} fontWeight="medium" fontSize="lg">
-                        {edu.institution}
-                      </Text>
-                    </Box>
+                        <Box
+                          position="absolute"
+                          left="16px"
+                          top="30px"
+                          boxSize={2}
+                          bg={headingColor}
+                          borderRadius="full"
+                        />
+                        <Text
+                          fontWeight="bold"
+                          color={textColor}
+                          fontSize="xl"
+                          mb={2}
+                        >
+                          {edu.degree}
+                        </Text>
+                        <Text color={buttonColor} fontSize="md" mb={2}>
+                          {edu.year}
+                        </Text>
+                        <Text
+                          color={textColor}
+                          fontWeight="medium"
+                          fontSize="lg"
+                        >
+                          {edu.institution}
+                        </Text>
+                      </Box>
+                    </motion.div>
                   ))}
                 </VStack>
               </Box>
             </motion.div>
           </GridItem>
           <GridItem>
+            {/* Main container for Experience section, controls its own entry animation and then staggers children */}
             <motion.div
-              ref={ref}
-              initial={{ opacity: 0, y: 100 }}
-              animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 100 }}
-              transition={{ duration: 0.7, delay: 1 }}
+              initial="hidden"
+              animate={isInView ? "show" : "hidden"}
+              variants={containerVariants} // Apply container variants for staggering
+              transition={{ delay: 0.6 }} // Delay the whole Experience section animation more
+              viewport={{ once: true, amount: 0.2 }} // Only animate once
             >
-              <Box
-                bg={bgColor} // Card background
-                p={6} // Padding for the card
-                borderRadius="xl" // Rounded corners for the card
-                boxShadow="md" // Subtle shadow for the card
-              >
-                <HStack align="center" mb={5}>
-                  <FaBriefcase size={28} color={headingColor} />
-                  <Heading
-                    as="h2"
-                    size="lg"
-                    color={headingColor}
-                    fontWeight="semibold"
-                  >
-                    Experience
-                  </Heading>
-                </HStack>
+              <Box bg={bgColor} p={6} borderRadius="xl" boxShadow="md">
+                {/* Experience Subheading with animation */}
+                <motion.div variants={fadeIn("right", "spring", 0, 1)}>
+                  {" "}
+                  {/* Animation for 'Experience' heading */}
+                  <HStack align="center" mb={5}>
+                    <FaBriefcase size={28} color={headingColor} />
+                    <Heading
+                      as="h2"
+                      size="lg"
+                      color={headingColor}
+                      fontWeight="semibold"
+                    >
+                      Experience
+                    </Heading>
+                  </HStack>
+                </motion.div>
                 <VStack align="start" spacing={6}>
                   {experience.map((exp) => (
-                    <Box
-                      key={exp.id}
-                      pl={10} // Increased padding
-                      pt={4}
-                      pb={4}
-                      position="relative"
-                      borderRadius={"lg"} // Rounded corners
-                      w={"full"}
-                      _hover={{
-                        transform: "translateY(-5px)",
-                        transition: "all 0.3s ease",
-                      }} // Hover effect
-                      bg={cardBg} // Card background
-                    >
+                    // Each individual experience item is now a motion.div
+                    <motion.div key={exp.id} variants={itemVariants}>
                       <Box
-                        position="absolute"
-                        left="16px" // Adjusted position
-                        top="30px"
-                        boxSize={2} // Larger dot
-                        bg={headingColor}
-                        borderRadius="full"
-                      />
-                      <Text
-                        fontWeight="bold"
-                        color={textColor}
-                        fontSize="xl"
-                        mb={2}
+                        pl={10}
+                        pt={4}
+                        pb={4}
+                        position="relative"
+                        borderRadius={"lg"}
+                        w={"500px"} // Fixed width for education items
+                        minH="150px" // Fixed min height for experience items
+                        display="flex" // Enable flexbox for vertical alignment
+                        flexDirection="column"
+                        justifyContent="center" // Center content vertically
+                        _hover={{
+                          transform: "translateY(-5px)",
+                          transition: "all 0.3s ease",
+                        }}
+                        bg={cardBg}
                       >
-                        {exp.position}
-                      </Text>
-                      <Text color={buttonColor} fontSize="md" mb={2}>
-                        {exp.year}
-                      </Text>
-                      <Text color={textColor} fontWeight="medium" fontSize="lg">
-                        {exp.company}
-                      </Text>
-                    </Box>
+                        <Box
+                          position="absolute"
+                          left="16px"
+                          top="30px"
+                          boxSize={2}
+                          bg={headingColor}
+                          borderRadius="full"
+                        />
+                        <Text
+                          fontWeight="bold"
+                          color={textColor}
+                          fontSize="xl"
+                          mb={2}
+                        >
+                          {exp.position}
+                        </Text>
+                        <Text color={buttonColor} fontSize="md" mb={2}>
+                          {exp.year}
+                        </Text>
+                        <Text
+                          color={textColor}
+                          fontWeight="medium"
+                          fontSize="lg"
+                        >
+                          {exp.company}
+                        </Text>
+                      </Box>
+                    </motion.div>
                   ))}
                 </VStack>
               </Box>

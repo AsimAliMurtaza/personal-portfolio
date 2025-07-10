@@ -14,9 +14,16 @@ import {
   SkeletonText,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
+import {
+  FaGithub,
+  FaLinkedin,
+  FaTwitter,
+  FaReddit,
+  FaDiscord,
+} from "react-icons/fa";
 import { fetchHomeData } from "@/lib/firebase";
 import { useEffect, useState } from "react";
+import { Typewriter } from "react-simple-typewriter";
 
 // Motion components
 const MotionBox = motion(Box);
@@ -26,6 +33,14 @@ const MotionHeading = motion(Heading);
 interface HomeData {
   description: string;
   image: string;
+  socialLinks: {
+    github: string;
+    linkedin: string;
+    twitter: string;
+    reddit?: string;
+    discord?: string;
+  };
+  roles: string[];
 }
 
 export default function HeroSection() {
@@ -54,6 +69,7 @@ export default function HeroSection() {
     "linear-gradient(90deg, teal.400, teal.200)",
     "linear-gradient(170deg, green.300, whiteAlpha.900)"
   );
+  const primaryColor = useColorModeValue("teal.300", "green.500");
 
   return (
     <Flex
@@ -96,7 +112,37 @@ export default function HeroSection() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 2, delay: 0.2 }}
         >
-          A Passionate Developer
+          {loading ? (
+            <SkeletonText
+              noOfLines={2} // 4 lines of skeleton loader
+              spacing="4" // Space between each line
+              skeletonHeight="16px" // Height of each line
+              fadeDuration={0.8} // Smooth fade effect
+              startColor="gray.700" // Darker gray for shimmer effect
+              endColor="gray.500" // Lighter gray as it moves
+            />
+          ) : (
+            <Box
+              as="span"
+              display="inline-flex"
+              alignItems="center"
+              px="2"
+              py="1"
+              bg={primaryColor}
+              color="white"
+              fontWeight="bold"
+            >
+              <Typewriter
+                words={homeData?.roles ?? ["Web Developer"]}
+                loop={true}
+                cursor
+                cursorStyle="|"
+                typeSpeed={70}
+                deleteSpeed={50}
+                delaySpeed={2000}
+              />
+            </Box>
+          )}
         </MotionText>
 
         {/* Description with Skeleton Loader */}
@@ -110,7 +156,7 @@ export default function HeroSection() {
         >
           {loading ? (
             <SkeletonText
-              noOfLines={4} // 4 lines of skeleton loader
+              noOfLines={2} // 4 lines of skeleton loader
               spacing="4" // Space between each line
               skeletonHeight="16px" // Height of each line
               fadeDuration={0.8} // Smooth fade effect
@@ -127,12 +173,20 @@ export default function HeroSection() {
           <HStack spacing={4}>
             {/* Social Media Links */}
             {[
-              { href: "https://github.com/AsimAliMurtaza", icon: FaGithub },
+              { href: homeData?.socialLinks?.github, icon: FaGithub },
               {
-                href: "https://linkedin.com/in/AsimAliMurtaza",
+                href: homeData?.socialLinks?.linkedin,
                 icon: FaLinkedin,
               },
-              { href: "https://x.com/heyits_asim", icon: FaTwitter },
+              { href: homeData?.socialLinks?.twitter, icon: FaTwitter },
+              {
+                href: homeData?.socialLinks?.reddit,
+                icon: FaReddit,
+              },
+              {
+                href: homeData?.socialLinks?.discord,
+                icon: FaDiscord,
+              },
             ].map((item, index) => (
               <Link key={index} href={item.href} target="_blank">
                 <MotionBox
