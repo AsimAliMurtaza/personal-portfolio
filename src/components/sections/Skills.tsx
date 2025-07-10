@@ -18,16 +18,13 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { FaCss3, FaReact, FaPython, FaGit, FaAws } from "react-icons/fa";
 import {
-  FaHtml5,
-  FaCss3,
-  FaReact,
-  FaNodeJs,
-  FaPython,
-  FaGit,
-  FaArrowUp,
-  FaArrowDown,
-} from "react-icons/fa";
+  SiNextdotjs,
+  SiGooglegemini,
+  SiTensorflow,
+  SiAwslambda,
+} from "react-icons/si";
 
 interface Skill {
   id: string;
@@ -55,7 +52,29 @@ export default function Skills() {
     "rgba(255, 255, 255, 0.15)",
     "rgba(30, 30, 30, 0.5)"
   );
-  const scrollButtonColor = useColorModeValue("teal.100", "green.200");
+  // const scrollButtonColor = useColorModeValue("teal.100", "green.200");
+
+  const iconsList = [
+    SiNextdotjs,
+    FaReact,
+    FaPython,
+    FaAws,
+    SiGooglegemini,
+    SiTensorflow,
+    FaGit,
+    SiAwslambda,
+  ];
+
+  const iconsTitle = [
+    "Next.js",
+    "React",
+    "Python",
+    "AWS",
+    "Gemini",
+    "TensorFlow",
+    "Git",
+    "AWS Lambda",
+  ];
 
   useEffect(() => {
     const fetchSkills = async () => {
@@ -126,77 +145,62 @@ export default function Skills() {
               gap={6}
               justifyContent="center"
             >
-              {[FaNodeJs, FaReact, FaPython, FaHtml5, FaCss3, FaGit].map(
-                (IconComponent, index) => (
-                  <GridItem key={index}>
-                    <VStack spacing={2} align="center">
-                      <MotionBox
-                        borderRadius="full"
-                        bg={cardBgColor}
-                        p={6}
-                        _hover={{
-                          transform: "scale(1.05)",
-                          bg: cardHoverBgColor,
-                        }}
-                        overflow="hidden"
-                        initial={{ opacity: 0, y: 40, scale: 0.9 }}
-                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                        transition={{
-                          duration: 0.6,
-                          delay: index * 0.2,
-                          ease: "easeOut",
-                        }}
-                        viewport={{ once: true }}
-                        whileHover={{
-                          scale: 1.05,
-                          transition: { duration: 0.3 },
-                        }}
-                      >
-                        <Icon
-                          as={IconComponent}
-                          boxSize={20}
-                          color={iconColor}
-                        />
-                      </MotionBox>
-                      <MotionText
-                        overflow="hidden"
-                        initial={{ opacity: 0, y: 40, scale: 0.9 }}
-                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                        transition={{
-                          duration: 0.6,
-                          delay: index * 0.2,
-                          ease: "easeOut",
-                        }}
-                        viewport={{ once: true }}
-                        whileHover={{
-                          scale: 1.05,
-                          transition: { duration: 0.3 },
-                        }}
-                        color={textColor}
-                        fontWeight="medium"
-                      >
-                        {
-                          [
-                            "Node.js",
-                            "React",
-                            "Python",
-                            "HTML5",
-                            "CSS3",
-                            "Git",
-                          ][index]
-                        }
-                      </MotionText>
-                    </VStack>
-                  </GridItem>
-                )
-              )}
+              {iconsList.map((IconComponent, index) => (
+                <GridItem key={index}>
+                  <VStack spacing={2} align="center">
+                    <MotionBox
+                      borderRadius="full"
+                      bg={cardBgColor}
+                      p={6}
+                      _hover={{
+                        transform: "scale(1.05)",
+                        bg: cardHoverBgColor,
+                      }}
+                      overflow="hidden"
+                      initial={{ opacity: 0, y: 40, scale: 0.9 }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{
+                        duration: 0.6,
+                        delay: index * 0.2,
+                        ease: "easeOut",
+                      }}
+                      viewport={{ once: true }}
+                      whileHover={{
+                        scale: 1.05,
+                        transition: { duration: 0.3 },
+                      }}
+                    >
+                      <Icon as={IconComponent} boxSize={20} color={iconColor} />
+                    </MotionBox>
+                    <MotionText
+                      overflow="hidden"
+                      initial={{ opacity: 0, y: 40, scale: 0.9 }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{
+                        duration: 0.6,
+                        delay: index * 0.2,
+                        ease: "easeOut",
+                      }}
+                      viewport={{ once: true }}
+                      whileHover={{
+                        scale: 1.05,
+                        transition: { duration: 0.3 },
+                      }}
+                      color={textColor}
+                      fontWeight="medium"
+                    >
+                      {iconsTitle[index]}
+                    </MotionText>
+                  </VStack>
+                </GridItem>
+              ))}
             </Grid>
           </GridItem>
 
           {/* Skill Progress Bars with Scroll Buttons */}
           <GridItem>
             <VStack spacing={12} align="center" position="relative">
-              <Button
+              {/* <Button
                 position="absolute"
                 top="-50px"
                 left="50%"
@@ -208,7 +212,7 @@ export default function Skills() {
                 _hover={{ transform: "scale(1.1)" }}
               >
                 <Icon color={"black"} as={FaArrowUp} />
-              </Button>
+              </Button> */}
 
               <Box
                 ref={skillsContainerRef}
@@ -265,7 +269,7 @@ export default function Skills() {
                 ))}
               </Box>
 
-              <Button
+              {/* <Button
                 position="absolute"
                 bottom="-50px"
                 left="50%"
@@ -277,7 +281,7 @@ export default function Skills() {
                 _hover={{ transform: "scale(1.1)" }}
               >
                 <Icon color={"black"} as={FaArrowDown} />
-              </Button>
+              </Button> */}
             </VStack>
           </GridItem>
         </Grid>
