@@ -20,6 +20,7 @@ import remarkGfm from "remark-gfm";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Components } from "react-markdown"; // Import Components type from react-markdown
+import LoadingScreen from "@/components/ui/LoadingScreen";
 
 // --- Animation Variants (Consistent with other components) ---
 // It's highly recommended to move these to a separate utility file (e.g., `lib/motionVariants.ts`)
@@ -206,17 +207,26 @@ Stay tuned for more in-depth articles on specific topics!
 
   if (loading)
     return (
-      <Container maxW="container.md" bg={bgColor}>
-        <Spinner
+      <Container
+        maxW="container.xl"
+        py={64}
+        bg={bgColor}
+        textAlign="center"
+        as={motion.div}
+        initial="hidden"
+        animate="show"
+        variants={containerVariants}
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+      >
+       <Spinner
           size="xl"
-          color={headingColor}
           thickness="4px"
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          height="100vh"
-          mx="auto"
-          mb={6}
+          speed="0.5s"
+          color={headingColor}
+          emptyColor="gray.200"
+          sx={{ filter: "drop-shadow(0px 0px 8px rgba(72, 187, 120, 0.8))" }}
         />
       </Container>
     );

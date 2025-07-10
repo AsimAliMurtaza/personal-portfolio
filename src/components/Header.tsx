@@ -18,6 +18,8 @@ import {
   IconButton,
   Container,
   useColorModeValue,
+  Button,
+  Link,
 } from "@chakra-ui/react";
 import { FaTwitter, FaLinkedin, FaCode } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
@@ -26,6 +28,7 @@ import { Link as ScrollLink } from "react-scroll";
 import { motion } from "framer-motion";
 import React from "react";
 import { ColorModeSwitcher } from "./ui/colormode";
+import { useRouter } from "next/navigation";
 
 const MotionBox = motion(Box);
 
@@ -33,6 +36,7 @@ const Navbar: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const textColor = useColorModeValue("teal.400", "green.100");
   const headerColor = useColorModeValue("white", "black");
+  const router = useRouter();
   return (
     <Container
       as="nav"
@@ -51,9 +55,14 @@ const Navbar: React.FC = () => {
           fontWeight="bold"
           color={textColor}
         >
-          <ScrollLink to="home" smooth={true} duration={500} offset={-70}>
+          <Button
+            variant="unstyled"
+            color={textColor}
+            onClick={() => router.push("/")}
+            size="xl"
+          >
             <Icon as={FaCode} mr={2} /> Asim
-          </ScrollLink>
+          </Button>
         </Text>
         <Spacer />
 

@@ -96,7 +96,7 @@ const LoadingScreen = () => {
     // Animate dots (keeps them right-aligned)
     const interval = setInterval(() => {
       setDotCount((prev) => (prev < 3 ? prev + 1 : 0));
-    }, 500);
+    }, 300);
 
     return () => clearInterval(interval);
   }, []);

@@ -277,7 +277,6 @@ export default function Blogs() {
       </motion.div>
 
       {/* Show More Button */}
-      {itemsToShow < blogs.length && (
         <Box textAlign="center" mt={8}>
           <motion.div
             initial="hidden"
@@ -295,7 +294,7 @@ export default function Blogs() {
               colorScheme="teal" // Use colorScheme for Chakra's theme colors
               bg={buttonBg} // Override bg if specific color is needed
               color={buttonColor} // Ensure button text color contrasts
-              onClick={handleShowMore}
+              onClick={() => router.push("/blogs")} // Navigate to blogs page
               _hover={{
                 transform: "scale(1.05)",
                 bg: buttonHoverBg, // Hover state background
@@ -306,7 +305,6 @@ export default function Blogs() {
             </Button>
           </motion.div>
         </Box>
-      )}
     </Container>
   );
 }
