@@ -199,7 +199,7 @@ export default function Resume() {
                         pb={4}
                         position="relative"
                         borderRadius={"lg"}
-                        w={"500px"} // Fixed width for education items
+                        w={{ base: "320px", md: "450px", lg: "500px" }} // Responsive width for experience items
                         minH="150px" // Fixed min height for education items
                         display="flex" // Enable flexbox for vertical alignment
                         flexDirection="column"
@@ -275,11 +275,11 @@ export default function Resume() {
                     <motion.div key={exp.id} variants={itemVariants}>
                       <Box
                         pl={10}
-                        pt={4}
+                        pt={2}
                         pb={4}
                         position="relative"
                         borderRadius={"lg"}
-                        w={"500px"} // Fixed width for education items
+                        w={{ base: "320px", md: "450px", lg: "500px" }} // Responsive width for experience items
                         minH="150px" // Fixed min height for experience items
                         display="flex" // Enable flexbox for vertical alignment
                         flexDirection="column"

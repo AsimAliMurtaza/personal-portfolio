@@ -104,7 +104,7 @@ export default function AboutMe() {
             "A passionate full-stack developer with a keen eye for detail and a love for creating engaging, performant web applications. I thrive on solving complex problems and continuously learning new technologies to deliver exceptional user experiences.",
           phone: "+92 3XX XXXXXXX",
           email: "your.email@example.com",
-          from: "Chichawatni, Pakistan",
+          from: "Lahore, Pakistan",
           language: "English, Urdu",
           freelance: "Available",
           resume: "https://example.com/your-resume.pdf", // Dummy resume link
@@ -277,7 +277,7 @@ export default function AboutMe() {
 
             {/* Description & Skills */}
             <GridItem>
-              <Box bg={cardBgColor} p={6} borderRadius="lg" boxShadow="lg">
+              <Box bg={cardBgColor} p={6} borderRadius="30" boxShadow="lg">
                 {/* Description Animation */}
                 <motion.div
                   variants={fadeIn("up", "spring", 0.1, 1)} // Slightly delayed fade in
